@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Management & Email Encryption</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+            margin-top: 0;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .loading {
+            display: none;
+            color: #666;
+            margin-top: 10px;
+        }
+        .error {
+            color: #ff0000;
+            margin-top: 10px;
+            display: none;
+        }
+        .result {
+            color: #4CAF50;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <h2>Send Encrypted Email</h2>
+        <form id="emailForm">
+            <div class="form-group">
+                <label for="recipientEmail">Recipient Email:</label>
+                <input type="email" id="recipientEmail" required placeholder="Enter recipient's email address">
+            </div>
+            <div class="form-group">
+                <label for="emailSubject">Subject:</label>
+                <input type="text" id="emailSubject" required placeholder="Enter email subject">
+            </div>
+            <div class="form-group">
+                <label for="emailMessage">Message:</label>
+                <textarea id="emailMessage" required placeholder="Enter your message"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="recipientCertificate">Recipient's Certificate (PEM format):</label>
+                <textarea id="recipientCertificate" required placeholder="Paste the recipient's public certificate"></textarea>
+            </div>
+            <button type="submit">Send Encrypted Email</button>
+            <div id="emailLoading" class="loading">Sending...</div>
+            <div id="emailError" class="error"></div>
+            <div id="emailResult" class="result"></div>
+        </form>
+    </div>
+
+    <div class="section">
+        <h2>Decrypt Email</h2>
+        <form id="decryptEmailForm">
+            <div class="form-group">
+                <label for="encryptedEmailContent">Encrypted Email Content:</label>
+                <textarea id="encryptedEmailContent" required placeholder="Paste the encrypted email content"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="decryptionPrivateKey">Your Private Key:</label>
+                <textarea id="decryptionPrivateKey" required placeholder="Paste your private key"></textarea>
+            </div>
+            <button type="submit">Decrypt Email</button>
+            <div id="decryptEmailLoading" class="loading">Decrypting...</div>
+            <div id="decryptEmailError" class="error"></div>
+            <div id="decryptEmailResult" class="result"></div>
+        </form>
+    </div>
+
+    <script>
+        function showLoading(prefix) {
+            document.getElementById(`${prefix}Loading`).style.display = 'block';
+            document.getElementById(`${prefix}Error`).style.display = 'none';
+            document.getElementById(`${prefix}Result`).style.display = 'none';
+        }
+
+        function hideLoading(prefix) {
+            document.getElementById(`${prefix}Loading`).style.display = 'none';
+        }
+
+        function showError(prefix, message) {
+            const errorElement = document.getElementById(`${prefix}Error`);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        function showResult(prefix, message) {
+            const resultElement = document.getElementById(`${prefix}Result`);
+            resultElement.textContent = message;
+            resultElement.style.display = 'block';
+        }
+
+        // Email encryption form handler
+        document.getElementById('emailForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showLoading('email');
+
+            try {
+                const response = await fetch('/send-encrypted-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        recipient_email: document.getElementById('recipientEmail').value,
+                        subject: document.getElementById('emailSubject').value,
+                        message: document.getElementById('emailMessage').value,
+                        certificate: document.getElementById('recipientCertificate').value
+                    })
+                });
+
+                const data = await response.json();
+                hideLoading('email');
+
+                if (data.success) {
+                    showResult('email', data.message);
+                    e.target.reset();
+                } else {
+                    showError('email', data.message);
+                }
+            } catch (error) {
+                hideLoading('email');
+                showError('email', 'Failed to send encrypted email');
+            }
+        });
+
+        // Email decryption form handler
+        document.getElementById('decryptEmailForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showLoading('decryptEmail');
+
+            try {
+                const response = await fetch('/decrypt-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        encrypted_message: document.getElementById('encryptedEmailContent').value,
+                        private_key: document.getElementById('decryptionPrivateKey').value
+                    })
+                });
+
+                const data = await response.json();
+                hideLoading('decryptEmail');
+
+                if (data.success) {
+                    showResult('decryptEmail', `Decrypted message: ${data.message}`);
+                } else {
+                    showError('decryptEmail', data.message);
+                }
+            } catch (error) {
+                hideLoading('decryptEmail');
+                showError('decryptEmail', 'Failed to decrypt email');
+            }
+        });
+    </script>
+</body>
+</html>

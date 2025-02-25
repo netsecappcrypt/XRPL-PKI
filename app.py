@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from flask import render_template
+from flask import render_template, send_file
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography import x509
@@ -8,6 +8,16 @@ from cryptography.x509.oid import NameOID
 import datetime
 import base64
 import os
+
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import smtplib
+from cryptography.hazmat.primitives import serialization, hashes
+from cryptography.hazmat.primitives.asymmetric import padding
+import ssl
+from email.mime.application import MIMEApplication
+from cryptography.x509 import load_pem_x509_certificate
+
 
 app = Flask(__name__)
 # Configure CORS with specific options
@@ -134,6 +144,87 @@ class CertificateManager:
         )
         return decrypted.decode('utf-8')
 
+
+class EmailEncryption:
+    def __init__(self):
+        # Configure your email settings
+        self.smtp_server = "smtp.gmail.com"
+        self.smtp_port = 587
+        self.sender_email = "gajendrh@tcd.ie"  # Replace with your email
+        self.sender_password = "npyc oksi zwso ulta"   # Replace with your app password
+
+    def encrypt_and_send_email(self, recipient_email, subject, message, certificate_pem):
+        try:
+            # Load the recipient's certificate
+            certificate = load_pem_x509_certificate(certificate_pem.encode())
+            public_key = certificate.public_key()
+
+            # Encrypt the message
+            encrypted_message = public_key.encrypt(
+                message.encode(),
+                padding.OAEP(
+                    mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                    algorithm=hashes.SHA256(),
+                    label=None
+                )
+            )
+
+            # Convert to base64 for email transmission
+            encrypted_base64 = base64.b64encode(encrypted_message).decode()
+
+            # Create the email
+            msg = MIMEMultipart()
+            msg['From'] = self.sender_email
+            msg['To'] = recipient_email
+            msg['Subject'] = subject
+
+            # Add encrypted message as attachment
+            encrypted_part = MIMEApplication(encrypted_base64.encode(), _subtype='enc')
+            encrypted_part.add_header('Content-Disposition', 'attachment', filename='encrypted_message.enc')
+            msg.attach(encrypted_part)
+
+            # Add a plain text part explaining this is an encrypted email
+            msg.attach(MIMEText("This is an encrypted email. Please use your private key to decrypt the attachment.", 'plain'))
+
+            # Send the email
+            with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
+                server.starttls(context=ssl.create_default_context())
+                server.login(self.sender_email, self.sender_password)
+                server.send_message(msg)
+
+            return True, "Email sent successfully"
+
+        except Exception as e:
+            return False, f"Failed to send encrypted email: {str(e)}"
+
+    def decrypt_email(self, encrypted_base64, private_key_pem):
+        try:
+            # Load the private key
+            private_key = serialization.load_pem_private_key(
+                private_key_pem.encode(),
+                password=None
+            )
+
+            # Decode base64 and decrypt
+            encrypted_message = base64.b64decode(encrypted_base64)
+            decrypted_message = private_key.decrypt(
+                encrypted_message,
+                padding.OAEP(
+                    mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                    algorithm=hashes.SHA256(),
+                    label=None
+                )
+            )
+
+            return True, decrypted_message.decode()
+
+        except Exception as e:
+            return False, f"Failed to decrypt message: {str(e)}"
+
+
+
+
+
 cert_manager = CertificateManager()
 
 @app.route('/')
@@ -143,6 +234,37 @@ def index():
 @app.route('/encrypt-decrypt')
 def encrypt_decrypt():
     return render_template('encrypt-decrypt.html')
+
+@app.route('/email-encryption')
+def email_encryption_page():
+    return render_template('email_encryption.html')
+
+
+
+# Add these routes to your Flask app
+@app.route('/send-encrypted-email', methods=['POST'])
+def send_encrypted_email():
+    data = request.json
+    email_handler = EmailEncryption()
+    success, message = email_handler.encrypt_and_send_email(
+        data['recipient_email'],
+        data['subject'],
+        data['message'],
+        data['certificate']
+    )
+    return jsonify({'success': success, 'message': message})
+
+@app.route('/decrypt-email', methods=['POST'])
+def decrypt_email():
+    data = request.json
+    email_handler = EmailEncryption()
+    success, message = email_handler.decrypt_email(
+        data['encrypted_message'],
+        data['private_key']
+    )
+    return jsonify({'success': success, 'message': message})
+
+
 
 @app.route('/generate-certificate', methods=['POST'])
 def generate_certificate():
