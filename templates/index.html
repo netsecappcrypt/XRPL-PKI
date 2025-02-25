@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        input, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Certificate Generator</h1>
+        <form id="certForm">
+            <label for="commonName">Common Name (CN):</label>
+            <input type="text" id="commonName" name="commonName" required>
+
+            <label for="organization">Organization (O):</label>
+            <input type="text" id="organization" name="organization" required>
+
+            <label for="country">Country (C):</label>
+            <input type="text" id="country" name="country" required>
+
+            <button type="submit">Generate Certificate</button>
+        </form>
+
+        <div id="result" class="result" style="display: none;">
+            <h3>Result:</h3>
+            <p id="certificate"></p>
+            <p id="privateKey"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('certForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // Get form data
+            const commonName = document.getElementById('commonName').value;
+            const organization = document.getElementById('organization').value;
+            const country = document.getElementById('country').value;
+
+            // Send POST request to Flask backend
+            try {
+                const response = await fetch('/generate-certificate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        commonName,
+                        organization,
+                        country,
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('result').style.display = 'block';
+                    document.getElementById('certificate').textContent = `Certificate: ${data.data.certificate}`;
+                    document.getElementById('privateKey').textContent = `Private Key: ${data.data.private_key}`;
+                } else {
+                    alert('Error generating certificate: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while generating the certificate.');
+            }
+        });
+    </script>
+</body>
+</html>
