@@ -3,84 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificate Generator</title>
+    <title>Blockchain Certificate Generator</title>
     <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --background-color: #ecf0f1;
+            --text-color: #2c3e50;
+            --border-radius: 8px;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--background-color);
+            color: var(--text-color);
         }
+
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
-        input, button {
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
             display: block;
-            width: 100%;
-            margin: 10px 0;
-            padding: 10px;
-            font-size: 16px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
         }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+
         button {
-            background-color: #007BFF;
+            width: 100%;
+            padding: 14px;
+            background-color: var(--secondary-color);
             color: white;
             border: none;
+            border-radius: var(--border-radius);
+            font-size: 16px;
             cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .result {
+            transition: background-color 0.3s ease;
             margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            background-color: #f8f9fa;
+            display: none;
+        }
+
+        .result h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .certificate-container {
+            background-color: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-top: 10px;
+        }
+
+        .copy-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .copy-button:hover {
+            background-color: #34495e;
+        }
+
+        .alert {
             padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
+            margin: 10px 0;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Certificate Generator</h1>
+        <h1>Blockchain Certificate Generator</h1>
+        
+        <div id="alert" class="alert"></div>
+
         <form id="certForm">
-            <label for="commonName">Common Name (CN):</label>
-            <input type="text" id="commonName" name="commonName" required>
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
 
-            <label for="organization">Organization (O):</label>
-            <input type="text" id="organization" name="organization" required>
+            <div class="form-group">
+                <label for="commonName">Common Name (CN):</label>
+                <input type="text" id="commonName" name="commonName" required>
+            </div>
 
-            <label for="country">Country (C):</label>
-            <input type="text" id="country" name="country" required>
+            <div class="form-group">
+                <label for="organization">Organization (O):</label>
+                <input type="text" id="organization" name="organization" required>
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country (C):</label>
+                <input type="text" id="country" name="country" maxlength="2" required>
+            </div>
 
             <button type="submit">Generate Certificate</button>
         </form>
 
-        <div id="result" class="result" style="display: none;">
-            <h3>Result:</h3>
-            <p id="certificate"></p>
-            <p id="privateKey"></p>
+        <div id="result" class="result">
+            <h3>Generated Certificate Details</h3>
+            
+            <div class="certificate-container">
+                <h4>Certificate:</h4>
+                <pre id="certificate" style="white-space: pre-wrap; word-break: break-all;"></pre>
+                <button class="copy-button" onclick="copyToClipboard('certificate')">Copy Certificate</button>
+            </div>
+
+            <div class="certificate-container">
+                <h4>Private Key:</h4>
+                <pre id="privateKey" style="white-space: pre-wrap; word-break: break-all;"></pre>
+                <button class="copy-button" onclick="copyToClipboard('privateKey')">Copy Private Key</button>
+            </div>
         </div>
     </div>
 
     <script>
+        function showAlert(message, type) {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.className = `alert alert-${type}`;
+            alert.style.display = 'block';
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+
+        async function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            try {
+                await navigator.clipboard.writeText(element.textContent);
+                showAlert('Copied to clipboard!', 'success');
+            } catch (err) {
+                showAlert('Failed to copy text', 'error');
+            }
+        }
+
         document.getElementById('certForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
-            // Get form data
-            const commonName = document.getElementById('commonName').value;
-            const organization = document.getElementById('organization').value;
-            const country = document.getElementById('country').value;
+            const formData = {
+                email: document.getElementById('email').value,
+                commonName: document.getElementById('commonName').value,
+                organization: document.getElementById('organization').value,
+                country: document.getElementById('country').value,
+            };
 
-            // Send POST request to Flask backend
             try {
                 const response = await fetch('/generate-certificate', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        commonName,
-                        organization,
-                        country,
-                    }),
+                    body: JSON.stringify(formData),
                 });
 
                 if (!response.ok) {
@@ -90,14 +231,15 @@
                 const data = await response.json();
                 if (data.success) {
                     document.getElementById('result').style.display = 'block';
-                    document.getElementById('certificate').textContent = `Certificate: ${data.data.certificate}`;
-                    document.getElementById('privateKey').textContent = `Private Key: ${data.data.private_key}`;
+                    document.getElementById('certificate').textContent = data.data.certificate;
+                    document.getElementById('privateKey').textContent = data.data.private_key;
+                    showAlert('Certificate generated successfully!', 'success');
                 } else {
-                    alert('Error generating certificate: ' + data.error);
+                    showAlert('Error generating certificate: ' + data.error, 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('An error occurred while generating the certificate.');
+                showAlert('An error occurred while generating the certificate.', 'error');
             }
         });
     </script>
