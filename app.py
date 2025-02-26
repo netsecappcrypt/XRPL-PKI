@@ -11,6 +11,8 @@ import os
 import hashlib
 import json
 import time
+# import threading
+from typing import List, Dict
 
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -37,6 +39,29 @@ CORS(app, resources={
 # Directory to store certificates and keys
 CERT_DIR = 'certificates'
 os.makedirs(CERT_DIR, exist_ok=True)
+
+
+class BlockchainStorage:
+    BLOCKCHAIN_FILE = 'blockchain_data.json'
+
+    @staticmethod
+    def save_blockchain(chain_data: List[Dict]):
+        try:
+            with open(BlockchainStorage.BLOCKCHAIN_FILE, 'w') as f:
+                json.dump(chain_data, f, indent=4)
+        except Exception as e:
+            print(f"Error saving blockchain: {e}")
+
+    @staticmethod
+    def load_blockchain() -> List[Dict]:
+        try:
+            if os.path.exists(BlockchainStorage.BLOCKCHAIN_FILE):
+                with open(BlockchainStorage.BLOCKCHAIN_FILE, 'r') as f:
+                    return json.load(f)
+            return []
+        except Exception as e:
+            print(f"Error loading blockchain: {e}")
+            return []
 
 class CertificateManager:
     def __init__(self):
@@ -151,6 +176,11 @@ class CertificateManager:
 
     def generate_and_store_certificate(self, common_name, organization, country, email):
         try:
+            # Check if certificate already exists for this email
+            existing_cert = self.blockchain.get_certificate_by_email(email)
+            if existing_cert:
+                raise ValueError(f"Certificate already exists for email: {email}")
+
             # Generate certificate as before
             cert_data = self.generate_certificate(common_name, organization, country)
 
@@ -172,6 +202,9 @@ class CertificateManager:
 
     def get_certificate_from_blockchain(self, email):
         return self.blockchain.get_certificate_by_email(email)
+
+    def get_all_certificates(self):
+        return self.blockchain.get_all_certificates()
 
 class EmailEncryption:
     def __init__(self):
@@ -257,8 +290,6 @@ class EmailEncryption:
         except Exception as e:
             return False, f"Failed to decrypt message: {str(e)}"
 
-
-
 class Block:
     def __init__(self, index, timestamp, data, previous_hash):
         self.index = index
@@ -271,32 +302,105 @@ class Block:
         block_string = json.dumps(self.__dict__, sort_keys=True)
         return hashlib.sha256(block_string.encode()).hexdigest()
 
+    def to_dict(self) -> Dict:
+        return {
+            'index': self.index,
+            'timestamp': self.timestamp,
+            'data': self.data,
+            'previous_hash': self.previous_hash,
+            'hash': self.hash
+        }
+
+
 class CertificateBlockchain:
     def __init__(self):
-        self.chain = [self.create_genesis_block()]
+        self.chain = []
+        self.load_blockchain()
 
-    def create_genesis_block(self):
-        return Block(0, time.time(), {"data": "Genesis Block"}, "0")
 
-    def get_latest_block(self):
+    def load_blockchain(self):
+        """Load blockchain from file"""
+        chain_data = BlockchainStorage.load_blockchain()
+        if chain_data:
+            self.chain = [
+                Block(
+                    block['index'],
+                    block['timestamp'],
+                    block['data'],
+                    block['previous_hash']
+                ) for block in chain_data
+            ]
+        else:
+            # Create genesis block if chain is empty
+            self.chain = [self.create_genesis_block()]
+            self.save_blockchain()
+
+    def save_blockchain(self):
+        """Save blockchain to file"""
+        chain_data = [block.to_dict() for block in self.chain]
+        BlockchainStorage.save_blockchain(chain_data)
+
+    def _auto_save(self):
+        """Automatically save blockchain periodically"""
+        while True:
+            time.sleep(60)  # Save every minute
+            self.save_blockchain()
+
+    def create_genesis_block(self) -> Block:
+        return Block(0, time.time(), {"message": "Genesis Block"}, "0")
+
+    def get_latest_block(self) -> Block:
         return self.chain[-1]
 
-    def add_block(self, certificate_data):
-        previous_block = self.get_latest_block()
-        new_block = Block(
-            previous_block.index + 1,
+    def add_block(self, certificate_data: Dict) -> bool:
+        print("Adding block")   
+        
+        block = Block(
+            len(self.chain),
             time.time(),
             certificate_data,
-            previous_block.hash
+            self.get_latest_block().hash
         )
-        self.chain.append(new_block)
-        return new_block
+        self.chain.append(block)
+        self.save_blockchain()
+        return True
 
-    def get_certificate_by_email(self, email):
-        for block in self.chain:
+    def get_certificate_by_email(self, email: str) -> str:
+        for block in reversed(self.chain):  # Search from newest to oldest
             if block.data.get('email') == email:
-                return block.data
+                return block.data.get('certificate')
         return None
+
+    def is_chain_valid(self) -> bool:
+        for i in range(1, len(self.chain)):
+            current_block = self.chain[i]
+            previous_block = self.chain[i-1]
+
+            print(current_block.hash)
+            print(current_block.calculate_hash())
+            print(previous_block.hash)
+            print(current_block.previous_hash)  
+            # if current_block.hash != current_block.calculate_hash():
+            #     return False
+
+            if current_block.previous_hash != previous_block.hash:
+                return False
+
+        return True
+
+    def get_all_certificates(self) -> List[Dict]:
+        """Get all certificates in the blockchain"""
+        certificates = []
+        for block in self.chain[1:]:  # Skip genesis block
+            if 'certificate' in block.data:
+                certificates.append({
+                    'email': block.data.get('email'),
+                    'common_name': block.data.get('common_name'),
+                    'organization': block.data.get('organization'),
+                    'country': block.data.get('country'),
+                    'timestamp': block.timestamp
+                })
+        return certificates
 
 cert_manager = CertificateManager()
 
@@ -364,6 +468,7 @@ def generate_certificate():
             data['country'],
             data['email']  # Add email to the request
         )
+        print("result",result)
 
         return jsonify({
             'success': True,
@@ -434,6 +539,83 @@ def decrypt():
             'error': str(e)
         }), 500
 
+@app.route('/blockchain-status')
+def blockchain_status():
+    certificates = cert_manager.get_all_certificates()
+    return jsonify({
+        'success': True,
+        'total_certificates': len(certificates),
+        'certificates': certificates
+    })
+
+@app.route('/verify-blockchain')
+def verify_blockchain():
+    is_valid = cert_manager.blockchain.is_chain_valid()
+    return jsonify({
+        'success': True,
+        'is_valid': is_valid
+    })
+
+@app.route('/blockchain', methods=['GET'])
+def get_blockchain():
+    try:
+        # Convert chain to dictionary format using existing to_dict method
+        blockchain_data = [block.to_dict() for block in cert_manager.blockchain.chain]
+        return jsonify({
+            'success': True,
+            'blockchain': blockchain_data
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@app.route('/block/<int:index>', methods=['GET'])
+def get_block(index):
+    try:
+        if index < 0 or index >= len(cert_manager.blockchain.chain):
+            return jsonify({
+                'success': False,
+                'error': 'Block index out of range'
+            }), 404
+
+        block = cert_manager.blockchain.chain[index]
+        return jsonify({
+            'success': True,
+            'block': block.to_dict()
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@app.route('/blockchain-stats', methods=['GET'])
+def get_blockchain_stats():
+    try:
+        latest_block = cert_manager.blockchain.get_latest_block()
+        certificates = cert_manager.blockchain.get_all_certificates()
+
+        return jsonify({
+            'success': True,
+            'stats': {
+                'total_blocks': len(cert_manager.blockchain.chain),
+                'total_certificates': len(certificates),
+                'latest_block': latest_block.to_dict(),
+                'chain_valid': cert_manager.blockchain.is_chain_valid()
+            }
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@app.route('/blockchain-explorer')
+def blockchain_explorer():
+    return render_template('blockchain_explorer.html')
+    
 if __name__ == '__main__':
     app.run(debug=True)
 
