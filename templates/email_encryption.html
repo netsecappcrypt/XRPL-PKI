@@ -7,33 +7,78 @@
     <style>
         :root {
             --primary-color: #2c3e50;
-            --secondary-color: #3498db;
+            --secondary-color: #ebab20;
             --success-color: #2ecc71;
             --error-color: #e74c3c;
             --background-color: #ecf0f1;
             --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             background-color: var(--background-color);
             color: var(--primary-color);
+            min-height: 100vh;
+        }
+
+        .navigation {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            background-color: var(--background-color);
         }
 
         .container {
             max-width: 1000px;
-            margin: 0 auto;
+            margin: 20px auto;
+            padding: 0 20px;
         }
 
         .header {
             text-align: center;
             margin-bottom: 30px;
-            padding: 20px;
+            padding: 30px;
             background-color: white;
             border-radius: var(--border-radius);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: var(--box-shadow);
         }
 
         .section {
@@ -41,12 +86,13 @@
             padding: 30px;
             border-radius: var(--border-radius);
             margin-bottom: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: var(--box-shadow);
         }
 
         h1 {
             color: var(--primary-color);
             margin: 0;
+            font-size: 2.2em;
         }
 
         h2 {
@@ -58,6 +104,21 @@
 
         .form-group {
             margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group .hint {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-group:hover .hint {
+            display: block;
         }
 
         label {
@@ -74,12 +135,14 @@
             border-radius: var(--border-radius);
             box-sizing: border-box;
             font-size: 16px;
-            transition: border-color 0.3s ease;
+            transition: var(--transition);
+            font-family: inherit;
         }
 
         input:focus, textarea:focus {
             outline: none;
             border-color: var(--secondary-color);
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
         }
 
         textarea {
@@ -96,12 +159,17 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
-            transition: background-color 0.3s ease;
+            transition: var(--transition);
             width: 100%;
         }
 
         button:hover {
             background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
         }
 
         .status-message {
@@ -109,6 +177,18 @@
             margin-top: 15px;
             border-radius: var(--border-radius);
             display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .loading {
@@ -117,15 +197,26 @@
             text-align: center;
         }
 
+        .loading::after {
+            content: "⌛";
+            margin-left: 10px;
+            animation: loading 1s infinite;
+        }
+
+        @keyframes loading {
+            0% { content: "⌛"; }
+            50% { content: "⏳"; }
+        }
+
         .error {
-            background-color: #fee;
+            background-color: #fff3f3;
             color: var(--error-color);
             border: 1px solid var(--error-color);
         }
 
         .result {
-            background-color: #e8f6e8;
-            color: var(--success-color);
+            background-color: #f0fff0;
+            color: #155724;
             border: 1px solid var(--success-color);
         }
 
@@ -137,38 +228,107 @@
             border: 1px solid #ddd;
         }
 
-        .copy-button {
-            background-color: var(--primary-color);
-            padding: 8px 16px;
-            margin-top: 10px;
-            font-size: 14px;
+        .blockchain-status p {
+            margin: 0;
+            color: #666;
         }
 
         .tabs {
             display: flex;
             margin-bottom: 20px;
+            background-color: #f8f9fa;
+            padding: 5px;
+            border-radius: var(--border-radius);
         }
 
         .tab {
-            padding: 10px 20px;
+            flex: 1;
+            padding: 12px 20px;
             cursor: pointer;
-            background-color: #f8f9fa;
+            background: none;
             border: none;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-            margin-right: 5px;
+            border-radius: var(--border-radius);
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .tab:hover {
+            background-color: rgba(52, 152, 219, 0.1);
         }
 
         .tab.active {
             background-color: var(--secondary-color);
             color: white;
         }
+
+        .copy-button {
+            background-color: var(--primary-color);
+            padding: 8px 16px;
+            margin-top: 10px;
+            font-size: 14px;
+            width: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .copy-button:hover {
+            background-color: #34495e;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .nav-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+            }
+
+            .tabs {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .tab {
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Blockchain-Based Email Encryption System</h1>
+    <nav class="navigation">
+        <div class="nav-content">
+            <a href="/" class="nav-logo">CMS</a>
+            <div class="nav-links">
+                <a href="/generate">Generate Certificate</a>
+                <a href="/encrypt-decrypt">Encrypt/Decrypt</a>
+                <a href="/email-encryption">Email Encryption</a>
+            </div>
         </div>
+    </nav>
+
+    <div class="container">
+        <!-- <div class="header">
+            <h1>Blockchain-Based Email Encryption System</h1>
+        </div> -->
 
         <div class="section">
             <div class="tabs">
@@ -181,22 +341,28 @@
                 <form id="emailForm">
                     <div class="form-group">
                         <label for="recipientEmail">Recipient Email:</label>
-                        <input type="email" id="recipientEmail" required placeholder="Enter recipient's email address">
+                        <input type="email" id="recipientEmail" required 
+                               placeholder="Enter recipient's email address">
+                        <div class="hint">Enter the email address of the recipient</div>
                     </div>
                     <div class="form-group">
                         <label for="emailSubject">Subject:</label>
-                        <input type="text" id="emailSubject" required placeholder="Enter email subject">
+                        <input type="text" id="emailSubject" required 
+                               placeholder="Enter email subject">
+                        <div class="hint">Enter a clear subject for your email</div>
                     </div>
                     <div class="form-group">
                         <label for="emailMessage">Message:</label>
-                        <textarea id="emailMessage" required placeholder="Enter your message"></textarea>
+                        <textarea id="emailMessage" required 
+                                 placeholder="Enter your message"></textarea>
+                        <div class="hint">Your message will be encrypted before sending</div>
                     </div>
                     <button type="submit">Send Encrypted Email</button>
-                    <div id="emailLoading" class="status-message loading">Sending...</div>
+                    <div id="emailLoading" class="status-message loading">Sending encrypted email...</div>
                     <div id="emailError" class="status-message error"></div>
                     <div id="emailResult" class="status-message result"></div>
                     <div class="blockchain-status">
-                        <p>Certificate will be retrieved from blockchain automatically using recipient's email.</p>
+                        <p>📝 Certificate will be retrieved from blockchain automatically using recipient's email.</p>
                     </div>
                 </form>
             </div>
@@ -206,14 +372,18 @@
                 <form id="decryptEmailForm">
                     <div class="form-group">
                         <label for="encryptedEmailContent">Encrypted Email Content:</label>
-                        <textarea id="encryptedEmailContent" required placeholder="Paste the encrypted email content"></textarea>
+                        <textarea id="encryptedEmailContent" required 
+                                 placeholder="Paste the encrypted email content"></textarea>
+                        <div class="hint">Paste the entire encrypted message here</div>
                     </div>
                     <div class="form-group">
                         <label for="decryptionPrivateKey">Your Private Key:</label>
-                        <textarea id="decryptionPrivateKey" required placeholder="Paste your private key"></textarea>
+                        <textarea id="decryptionPrivateKey" required 
+                                 placeholder="Paste your private key"></textarea>
+                        <div class="hint">Use your private key to decrypt the message</div>
                     </div>
                     <button type="submit">Decrypt Email</button>
-                    <div id="decryptEmailLoading" class="status-message loading">Decrypting...</div>
+                    <div id="decryptEmailLoading" class="status-message loading">Decrypting message...</div>
                     <div id="decryptEmailError" class="status-message error"></div>
                     <div id="decryptEmailResult" class="status-message result"></div>
                 </form>
@@ -229,6 +399,11 @@
 
             document.getElementById('sendSection').style.display = tab === 'send' ? 'block' : 'none';
             document.getElementById('decryptSection').style.display = tab === 'decrypt' ? 'block' : 'none';
+
+            // Reset forms and hide messages
+            document.getElementById('emailForm').reset();
+            document.getElementById('decryptEmailForm').reset();
+            document.querySelectorAll('.status-message').forEach(el => el.style.display = 'none');
         }
 
         function showStatusMessage(prefix, type, message) {
@@ -239,6 +414,10 @@
             const messageElement = document.getElementById(`${prefix}${type.charAt(0).toUpperCase() + type.slice(1)}`);
             if (message) messageElement.textContent = message;
             messageElement.style.display = 'block';
+
+            if (type === 'result') {
+                messageElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
         }
 
         document.getElementById('emailForm').addEventListener('submit', async (e) => {
@@ -260,7 +439,7 @@
                 showStatusMessage('email', data.success ? 'result' : 'error', data.message);
                 if (data.success) e.target.reset();
             } catch (error) {
-                showStatusMessage('email', 'error', 'Failed to send encrypted email');
+                showStatusMessage('email', 'error', 'Failed to send encrypted email. Please try again.');
             }
         });
 
@@ -282,7 +461,7 @@
                 showStatusMessage('decryptEmail', data.success ? 'result' : 'error', 
                     data.success ? `Decrypted message: ${data.message}` : data.message);
             } catch (error) {
-                showStatusMessage('decryptEmail', 'error', 'Failed to decrypt email');
+                showStatusMessage('decryptEmail', 'error', 'Failed to decrypt email. Please check your private key and try again.');
             }
         });
     </script>

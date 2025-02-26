@@ -1,0 +1,227 @@
+<!-- templates/dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Management Dashboard</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #ebab20;
+            --accent-color: #e74c3c;
+            --background-color: #ecf0f1;
+            --card-hover-color: #f7f9fa;
+            --border-radius: 10px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--primary-color);
+        }
+
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 2.5em;
+        }
+
+        .header p {
+            color: #666;
+            margin: 10px 0 0 0;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            background-color: var(--card-hover-color);
+        }
+
+        .card h2 {
+            margin: 0 0 15px 0;
+            color: var(--secondary-color);
+        }
+
+        .card p {
+            margin: 0;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .card-icon {
+            font-size: 2em;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+
+        .status-bar {
+            background: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-item {
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .status-item h3 {
+            margin: 0;
+            color: var(--secondary-color);
+        }
+
+        .status-item p {
+            margin: 5px 0 0 0;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+
+            .status-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .status-item {
+                width: 100%;
+                padding: 10px 0;
+                border-bottom: 1px solid #eee;
+            }
+
+            .status-item:last-child {
+                border-bottom: none;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <h1>Certificate Management System</h1>
+            <p>Secure Certificate Generation and Email Encryption Platform</p>
+        </div>
+
+        <div class="status-bar" id="statusBar">
+            <div class="status-item">
+                <h3 id="totalCertificates">-</h3>
+                <p>Total Certificates</p>
+            </div>
+            <div class="status-item">
+                <h3 id="blockchainStatus">-</h3>
+                <p>Blockchain Status</p>
+            </div>
+            <div class="status-item">
+                <h3 id="lastActivity">-</h3>
+                <p>Last Activity</p>
+            </div>
+        </div>
+
+        <div class="cards-container">
+            <a href="/generate" class="card">
+                <div class="card-icon">🔑</div>
+                <h2>Generate Certificate</h2>
+                <p>Create new digital certificates for secure communication</p>
+            </a>
+
+            <a href="/encrypt-decrypt" class="card">
+                <div class="card-icon">🔒</div>
+                <h2>Encrypt/Decrypt</h2>
+                <p>Encrypt and decrypt messages using certificates</p>
+            </a>
+
+            <a href="/email-encryption" class="card">
+                <div class="card-icon">✉️</div>
+                <h2>Email Encryption</h2>
+                <p>Send and receive encrypted emails securely</p>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 Certificate Management System. All rights reserved.</p>
+        </div>
+    </div>
+
+    <!-- <script>
+        async function updateDashboardStatus() {
+            try {
+                // Fetch blockchain status
+                const statusResponse = await fetch('/blockchain-status');
+                const statusData = await statusResponse.json();
+
+                // Fetch blockchain verification
+                const verifyResponse = await fetch('/verify-blockchain');
+                const verifyData = await verifyResponse.json();
+
+                // Update status bar
+                document.getElementById('totalCertificates').textContent = 
+                    statusData.total_certificates;
+                document.getElementById('blockchainStatus').textContent = 
+                    verifyData.is_valid ? 'Valid' : 'Invalid';
+                document.getElementById('lastActivity').textContent = 
+                    new Date().toLocaleTimeString();
+
+            } catch (error) {
+                console.error('Error updating dashboard:', error);
+            }
+        }
+
+        // Update status when page loads
+        document.addEventListener('DOMContentLoaded', updateDashboardStatus);
+
+        // Update status every 30 seconds
+        setInterval(updateDashboardStatus, 30000);
+    </script> -->
+</body>
+</html>

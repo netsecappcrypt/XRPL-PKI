@@ -7,27 +7,71 @@
     <style>
         :root {
             --primary-color: #2c3e50;
-            --secondary-color: #3498db;
+            --secondary-color: #ebab20;
             --background-color: #ecf0f1;
             --text-color: #2c3e50;
+            --success-color: #2ecc71;
+            --error-color: #e74c3c;
             --border-radius: 8px;
+            --box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             background-color: var(--background-color);
             color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        .navigation {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 20px;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            background-color: var(--background-color);
         }
 
         .container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 20px auto;
             background-color: white;
             padding: 30px;
             border-radius: var(--border-radius);
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            box-shadow: var(--box-shadow);
         }
 
         h1 {
@@ -35,11 +79,13 @@
             text-align: center;
             margin-bottom: 30px;
             border-bottom: 2px solid var(--secondary-color);
-            padding-bottom: 10px;
+            padding-bottom: 15px;
+            font-size: 2.2em;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            position: relative;
         }
 
         label {
@@ -55,13 +101,25 @@
             border: 2px solid #ddd;
             border-radius: var(--border-radius);
             font-size: 16px;
-            transition: border-color 0.3s ease;
+            transition: var(--transition);
             box-sizing: border-box;
         }
 
         input:focus {
             border-color: var(--secondary-color);
             outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
+        .form-group .hint {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-group:hover .hint {
+            display: block;
         }
 
         button {
@@ -73,12 +131,18 @@
             border-radius: var(--border-radius);
             font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: var(--transition);
             margin-top: 20px;
+            font-weight: 600;
         }
 
         button:hover {
             background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
         }
 
         .result {
@@ -93,13 +157,21 @@
         .result h3 {
             color: var(--primary-color);
             margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
         }
 
         .certificate-container {
             background-color: white;
-            padding: 15px;
+            padding: 20px;
             border-radius: var(--border-radius);
-            margin-top: 10px;
+            margin-top: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .certificate-container h4 {
+            margin-top: 0;
+            color: var(--secondary-color);
         }
 
         .copy-button {
@@ -111,6 +183,10 @@
             cursor: pointer;
             font-size: 14px;
             margin-top: 10px;
+            width: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .copy-button:hover {
@@ -118,10 +194,11 @@
         }
 
         .alert {
-            padding: 10px;
+            padding: 15px;
             margin: 10px 0;
             border-radius: var(--border-radius);
             display: none;
+            animation: slideIn 0.3s ease;
         }
 
         .alert-success {
@@ -135,9 +212,79 @@
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .loading::after {
+            content: "⌛";
+            animation: loading 1s infinite;
+        }
+
+        @keyframes loading {
+            0% { content: "⌛"; }
+            50% { content: "⏳"; }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 20px;
+            }
+
+            .nav-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+
+        .pre-wrap {
+            white-space: pre-wrap;
+            word-break: break-all;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            max-height: 200px;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
+    <nav class="navigation">
+        <div class="nav-content">
+            <a href="/" class="nav-logo">CMS</a>
+            <div class="nav-links">
+                <a href="/generate">Generate Certificate</a>
+                <a href="/encrypt-decrypt">Encrypt/Decrypt</a>
+                <a href="/email-encryption">Email Encryption</a>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
         <h1>Blockchain Certificate Generator</h1>
         
@@ -147,39 +294,49 @@
             <div class="form-group">
                 <label for="email">Email Address:</label>
                 <input type="email" id="email" name="email" required>
+                <div class="hint">This email will be associated with your certificate</div>
             </div>
 
             <div class="form-group">
                 <label for="commonName">Common Name (CN):</label>
                 <input type="text" id="commonName" name="commonName" required>
+                <div class="hint">Usually your full name or domain name</div>
             </div>
 
             <div class="form-group">
                 <label for="organization">Organization (O):</label>
                 <input type="text" id="organization" name="organization" required>
+                <div class="hint">Your company or organization name</div>
             </div>
 
             <div class="form-group">
                 <label for="country">Country (C):</label>
                 <input type="text" id="country" name="country" maxlength="2" required>
+                <div class="hint">Two-letter country code (e.g., US, UK, IN)</div>
             </div>
 
             <button type="submit">Generate Certificate</button>
         </form>
+
+        <div id="loading" class="loading">Generating certificate...</div>
 
         <div id="result" class="result">
             <h3>Generated Certificate Details</h3>
             
             <div class="certificate-container">
                 <h4>Certificate:</h4>
-                <pre id="certificate" style="white-space: pre-wrap; word-break: break-all;"></pre>
-                <button class="copy-button" onclick="copyToClipboard('certificate')">Copy Certificate</button>
+                <pre id="certificate" class="pre-wrap"></pre>
+                <button class="copy-button" onclick="copyToClipboard('certificate')">
+                    <span>Copy Certificate</span>
+                </button>
             </div>
 
             <div class="certificate-container">
                 <h4>Private Key:</h4>
-                <pre id="privateKey" style="white-space: pre-wrap; word-break: break-all;"></pre>
-                <button class="copy-button" onclick="copyToClipboard('privateKey')">Copy Private Key</button>
+                <pre id="privateKey" class="pre-wrap"></pre>
+                <button class="copy-button" onclick="copyToClipboard('privateKey')">
+                    <span>Copy Private Key</span>
+                </button>
             </div>
         </div>
     </div>
@@ -207,12 +364,16 @@
 
         document.getElementById('certForm').addEventListener('submit', async function (e) {
             e.preventDefault();
+            
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            document.getElementById('result').style.display = 'none';
 
             const formData = {
                 email: document.getElementById('email').value,
                 commonName: document.getElementById('commonName').value,
                 organization: document.getElementById('organization').value,
-                country: document.getElementById('country').value,
+                country: document.getElementById('country').value.toUpperCase(),
             };
 
             try {
@@ -240,7 +401,14 @@
             } catch (error) {
                 console.error('Error:', error);
                 showAlert('An error occurred while generating the certificate.', 'error');
+            } finally {
+                loading.style.display = 'none';
             }
+        });
+
+        // Auto-capitalize country code
+        document.getElementById('country').addEventListener('input', function(e) {
+            this.value = this.value.toUpperCase();
         });
     </script>
 </body>

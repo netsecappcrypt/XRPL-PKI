@@ -302,6 +302,10 @@ cert_manager = CertificateManager()
 
 @app.route('/')
 def index():
+    return render_template('dashboard.html')
+
+@app.route('/generate')
+def generate():
     return render_template('index.html')
 
 @app.route('/encrypt-decrypt')
@@ -312,6 +316,11 @@ def encrypt_decrypt():
 def email_encryption_page():
     return render_template('email_encryption.html')
 
+
+# # Add a route to redirect root to dashboard
+# @app.route('/')
+# def index():
+#     return redirect(url_for('dashboard'))
 
 
 # Add these routes to your Flask app
