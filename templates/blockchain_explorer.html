@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Explorer</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-color: #f8f9fa;
+            --text-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .navigation {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, #ffffff, #f5f7fa);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0.5rem 0;
+            letter-spacing: -1px;
+        }
+
+        .stat-label {
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .block {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .block:hover {
+            box-shadow: var(--box-shadow);
+        }
+
+        .block-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .block-title {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .block-timestamp {
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .block-content {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .status {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+        }
+
+        .status.success {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: #27ae60;
+            border: 1px solid rgba(46, 204, 113, 0.2);
+        }
+
+        .status.error {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: #c0392b;
+            border: 1px solid rgba(231, 76, 60, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .nav-content {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .nav-links {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            .stat-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navigation">
+        <div class="nav-content">
+            <a href="/" class="nav-logo">CMS</a>
+            <div class="nav-links">
+                <a href="/generate">Generate Certificate</a>
+                <a href="/encrypt-decrypt">Encrypt/Decrypt</a>
+                <a href="/email-encryption">Email Encryption</a>
+                <a href="/blockchain-explorer">Blockchain Explorer</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="section">
+            <h1>Blockchain Explorer</h1>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total Blocks</div>
+                    <div class="stat-value" id="totalBlocks">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Certificates</div>
+                    <div class="stat-value" id="totalCertificates">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Chain Status</div>
+                    <div class="stat-value" id="chainStatus">-</div>
+                </div>
+            </div>
+
+            <button onclick="verifyBlockchain()">Verify Blockchain Integrity</button>
+            <div id="verifyLoading" class="loading">Verifying blockchain...</div>
+            <div id="verifyStatus" class="status"></div>
+        </div>
+
+        <div class="section">
+            <h2>Blockchain Blocks</h2>
+            <button onclick="fetchBlockchain()">Refresh Blockchain Data</button>
+            <div id="blockchainLoading" class="loading">Loading blockchain...</div>
+            <div id="blockchainData"></div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchBlockchain() {
+            const loading = document.getElementById('blockchainLoading');
+            const dataContainer = document.getElementById('blockchainData');
+
+            loading.style.display = 'block';
+            dataContainer.innerHTML = '';
+
+            try {
+                const response = await fetch('/blockchain');
+                const data = await response.json();
+
+                if (data.success) {
+                    data.blockchain.forEach((block, index) => {
+                        const blockElement = document.createElement('div');
+                        blockElement.className = 'block';
+                        blockElement.innerHTML = `
+                            <div class="block-header">
+                                <h3 class="block-title">Block #${block.index}</h3>
+                                <span class="block-timestamp">
+                                    ${new Date(block.timestamp * 1000).toLocaleString()}
+                                </span>
+                            </div>
+                            <div class="block-content">
+                                <pre>${JSON.stringify(block.data, null, 2)}</pre>
+                            </div>
+                        `;
+                        dataContainer.appendChild(blockElement);
+                    });
+
+                    // Update stats
+                    document.getElementById('totalBlocks').textContent = data.blockchain.length;
+                    const certCount = data.blockchain.filter(block =>
+                        block.data && block.data.certificate
+                    ).length;
+                    document.getElementById('totalCertificates').textContent = certCount;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                dataContainer.innerHTML = '<div class="status error">Failed to load blockchain data</div>';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        async function verifyBlockchain() {
+            const loading = document.getElementById('verifyLoading');
+            const status = document.getElementById('verifyStatus');
+            const chainStatus = document.getElementById('chainStatus');
+
+            loading.style.display = 'block';
+            status.style.display = 'none';
+
+            try {
+                const response = await fetch('/verify-blockchain');
+                const data = await response.json();
+
+                status.className = `status ${data.is_valid ? 'success' : 'error'}`;
+                status.textContent = data.is_valid ?
+                    'Blockchain integrity verified successfully!' :
+                    'Blockchain integrity verification failed!';
+                status.style.display = 'block';
+
+                chainStatus.textContent = data.is_valid ? '✓' : '✗';
+                chainStatus.style.color = data.is_valid ?
+                    'var(--success-color)' : 'var(--error-color)';
+            } catch (error) {
+                status.className = 'status error';
+                status.textContent = 'Failed to verify blockchain';
+                status.style.display = 'block';
+                chainStatus.textContent = '?';
+                chainStatus.style.color = 'var(--error-color)';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Load initial data
+        window.addEventListener('load', () => {
+            fetchBlockchain();
+            verifyBlockchain();
+        });
+    </script>
+</body>
+</html>
