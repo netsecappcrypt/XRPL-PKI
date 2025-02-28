@@ -217,12 +217,17 @@ class EmailEncryption:
 
     def encrypt_and_send_email(self, recipient_email, subject, message):
         try:
+            print("Inside encrypt_and_send_email")
             # Retrieve certificate from blockchain
             cert_data = self.cert_manager.get_certificate_from_blockchain(recipient_email)
+
+            # print("cert_data",cert_data)
             if not cert_data:
                 return False, "Recipient certificate not found in blockchain"
 
             certificate_pem = cert_data['certificate']
+
+            # print("Certificate loaded")
 
             # Load the recipient's certificate
             certificate = load_pem_x509_certificate(certificate_pem.encode())
@@ -238,9 +243,11 @@ class EmailEncryption:
                 )
             )
 
+            # print("Message encrypted")
             # Convert to base64 for email transmission
             encrypted_base64 = base64.b64encode(encrypted_message).decode()
 
+            # print("Message base64 encoded")
             # Create the email
             msg = MIMEMultipart()
             msg['From'] = self.sender_email
@@ -252,6 +259,7 @@ class EmailEncryption:
             encrypted_part.add_header('Content-Disposition', 'attachment', filename='encrypted_message.enc')
             msg.attach(encrypted_part)
 
+            # print("Attachment added")
             # Add a plain text part explaining this is an encrypted email
             msg.attach(MIMEText("This is an encrypted email. Please use your private key to decrypt the attachment.", 'plain'))
 
@@ -366,9 +374,12 @@ class CertificateBlockchain:
         return True
 
     def get_certificate_by_email(self, email: str) -> str:
+        # print("Inside get_certificate_by_email")
         for block in reversed(self.chain):  # Search from newest to oldest
+            # print("block.data",block.data)
             if block.data.get('email') == email:
-                return block.data.get('certificate')
+                # print("block.data.get('certificate')",block.data.get('certificate'))
+                return block.data
         return None
 
     def is_chain_valid(self) -> bool:
@@ -376,10 +387,10 @@ class CertificateBlockchain:
             current_block = self.chain[i]
             previous_block = self.chain[i-1]
 
-            print(current_block.hash)
-            print(current_block.calculate_hash())
-            print(previous_block.hash)
-            print(current_block.previous_hash)  
+            # print(current_block.hash)
+            # print(current_block.calculate_hash())
+            # print(previous_block.hash)
+            # print(current_block.previous_hash)  
             # if current_block.hash != current_block.calculate_hash():
             #     return False
 
@@ -430,6 +441,7 @@ def email_encryption_page():
 # Add these routes to your Flask app
 @app.route('/send-encrypted-email', methods=['POST'])
 def send_encrypted_email():
+    # print("Inside send_encrypted_email")
     data = request.json
     email_handler = EmailEncryption()
     success, message = email_handler.encrypt_and_send_email(
@@ -438,6 +450,7 @@ def send_encrypted_email():
         data['message'],
         # data['certificate']
     )
+    # print("success",success)
     return jsonify({'success': success, 'message': message})
 
 @app.route('/decrypt-email', methods=['POST'])
@@ -455,7 +468,7 @@ def decrypt_email():
 @app.route('/generate-certificate', methods=['POST'])
 def generate_certificate():
     data = request.json
-    print("data",data)
+    # print("data",data)
     try:
         # result = cert_manager.generate_certificate(
         #     data['commonName'],
@@ -468,7 +481,7 @@ def generate_certificate():
             data['country'],
             data['email']  # Add email to the request
         )
-        print("result",result)
+        # print("result",result)
 
         return jsonify({
             'success': True,
