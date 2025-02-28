@@ -1,0 +1,75 @@
+❯ python3 cert_test.py
+
+=== Starting 5000 Certificate Tests ===
+Testing certificate generation with random details, compression, and encryption/decryption...
+Progress: |██████████████████████████████████████████████████| 100.0% Complete
+
+=== Test Results ===
+✓ Size Test: 100.00% of certificates were under 1000 bytes
+✓ Encryption Test: 100.00% of messages were correctly encrypted/decrypted
+
+Compressed Certificate Size Statistics:
+  Minimum size: 533 bytes
+  Maximum size: 610 bytes
+  Average size: 573.67 bytes
+
+Total test duration: 92.78 seconds
+Average time per test: 18.56 ms
+
+Sample Certificate Details (first 5 and last 5):
+
+First 5 certificates:
+
+Certificate 1:
+  Common Name: deltaglobal.cloud
+  Organization: DeltaGlobal
+  Country: IN
+
+Certificate 2:
+  Common Name: nexuscorp.dev
+  Organization: NexusCorp
+  Country: CA
+
+Certificate 3:
+  Common Name: deltainc.cloud
+  Organization: DeltaInc
+  Country: US
+
+Certificate 4:
+  Common Name: betaglobal.org
+  Organization: BetaGlobal
+  Country: DE
+
+Certificate 5:
+  Common Name: omegaltd.dev
+  Organization: OmegaLtd
+  Country: GB
+
+Last 5 certificates:
+
+Certificate 4996:
+  Common Name: novaltd.tech
+  Organization: NovaLtd
+  Country: DE
+
+Certificate 4997:
+  Common Name: gammatech.cloud
+  Organization: GammaTech
+  Country: JP
+
+Certificate 4998:
+  Common Name: omegaltd.cloud
+  Organization: OmegaLtd
+  Country: BR
+
+Certificate 4999:
+  Common Name: alphaglobal.net
+  Organization: AlphaGlobal
+  Country: BR
+
+Certificate 5000:
+  Common Name: nexusglobal.tech
+  Organization: NexusGlobal
+  Country: US
+[WARN] - (starship::utils): Executing command "/opt/homebrew/bin/node" timed out.                                                                                                                       
+[WARN] - (starship::utils): You can set command_timeout in your config to a higher value to allow longer-running commands to keep executing.

@@ -225,7 +225,7 @@ class CertificateTest:
 def main():
     try:
         tester = CertificateTest()
-        tester.run_tests(1000)
+        tester.run_tests(5000)
     except Exception as e:
         print_error(f"Test suite failed: {str(e)}")
 
