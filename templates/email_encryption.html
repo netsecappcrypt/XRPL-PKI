@@ -176,6 +176,7 @@
             margin-top: 1rem;
             border-radius: var(--border-radius);
             font-weight: 500;
+            display: none;
         }
 
         .loading {
@@ -261,14 +262,10 @@
     </nav>
 
     <div class="container">
-        <!-- <div class="header">
-            <h1>Blockchain-Based Email Encryption System</h1>
-        </div> -->
-
         <div class="section">
             <div class="tabs">
-                <button class="tab active" onclick="switchTab('send')">Send Encrypted Email</button>
-                <button class="tab" onclick="switchTab('decrypt')">Decrypt Email</button>
+                <button class="tab active" id="sendTab" onclick="switchTab('send')">Send Encrypted Email</button>
+                <button class="tab" id="decryptTab" onclick="switchTab('decrypt')">Decrypt Email</button>
             </div>
 
             <div id="sendSection">
@@ -327,10 +324,19 @@
     </div>
 
     <script>
+        // Hide all status messages on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.status-message').forEach(el => {
+                el.style.display = 'none';
+            });
+        });
+
         function switchTab(tab) {
             const tabs = document.querySelectorAll('.tab');
             tabs.forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
+            
+            // Properly select the clicked tab
+            document.getElementById(tab + 'Tab').classList.add('active');
 
             document.getElementById('sendSection').style.display = tab === 'send' ? 'block' : 'none';
             document.getElementById('decryptSection').style.display = tab === 'decrypt' ? 'block' : 'none';
@@ -344,14 +350,18 @@
         function showStatusMessage(prefix, type, message) {
             const elements = ['loading', 'error', 'result'].map(t => 
                 document.getElementById(`${prefix}${t.charAt(0).toUpperCase() + t.slice(1)}`));
-            elements.forEach(el => el.style.display = 'none');
+            elements.forEach(el => {
+                if (el) el.style.display = 'none';
+            });
             
             const messageElement = document.getElementById(`${prefix}${type.charAt(0).toUpperCase() + type.slice(1)}`);
-            if (message) messageElement.textContent = message;
-            messageElement.style.display = 'block';
+            if (messageElement) {
+                if (message) messageElement.textContent = message;
+                messageElement.style.display = 'block';
 
-            if (type === 'result') {
-                messageElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                if (type === 'result') {
+                    messageElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
             }
         }
 
