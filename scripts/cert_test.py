@@ -31,21 +31,16 @@ def print_error(message):
     print(f"{Colors.RED}✖ {message}{Colors.ENDC}")
 
 def generate_random_details():
-    # List of sample values for certificate details
     companies = ['Tech', 'Solutions', 'Systems', 'Corp', 'Inc', 'Ltd', 'Global']
     domains = ['com', 'net', 'org', 'io', 'tech', 'dev', 'cloud']
     countries = ['US', 'GB', 'DE', 'FR', 'JP', 'CA', 'AU', 'BR', 'IN']
-    
-    # Generate random company name
+
     company = f"{random.choice(['Alpha', 'Beta', 'Delta', 'Gamma', 'Omega', 'Nova', 'Nexus'])}"
     company += f"{random.choice(companies)}"
-    
-    # Generate random domain
+
     domain = f"{company.lower()}.{random.choice(domains)}"
-    
-    # Generate random country
     country = random.choice(countries)
-    
+
     return {
         'common_name': domain,
         'organization': company,
@@ -62,33 +57,68 @@ class CertificateTest:
             'max_size': 0,
             'avg_size': 0,
             'total_size': 0,
-            'cert_details': []  # Store details of each certificate
+            'cert_details': []
         }
+        self.root_ca_cert = None
+        self.root_ca_key = None
+        self.create_root_ca()
+
+    def create_root_ca(self):
+        # Generate root CA private key
+        self.root_ca_key = rsa.generate_private_key(
+            public_exponent=65537,
+            key_size=1024,
+        )
+
+        # Create subject for the root CA
+        subject = x509.Name([
+            x509.NameAttribute(NameOID.COMMON_NAME, "Root CA"),
+            x509.NameAttribute(NameOID.ORGANIZATION_NAME, "My Organization"),
+            x509.NameAttribute(NameOID.COUNTRY_NAME, "US")
+        ])
+
+        # Create self-signed root CA certificate
+        self.root_ca_cert = x509.CertificateBuilder().subject_name(
+            subject
+        ).issuer_name(
+            subject
+        ).public_key(
+            self.root_ca_key.public_key()
+        ).serial_number(
+            x509.random_serial_number()
+        ).not_valid_before(
+            datetime.datetime.utcnow()
+        ).not_valid_after(
+            datetime.datetime.utcnow() + datetime.timedelta(days=365)
+        ).add_extension(
+            x509.BasicConstraints(ca=True, path_length=None), critical=True
+        ).sign(self.root_ca_key, hashes.SHA256())
+
+        # Save root CA certificate
+        with open("root_ca_cert.pem", "wb") as f:
+            f.write(self.root_ca_cert.public_bytes(serialization.Encoding.PEM))
 
     def generate_and_test_certificate(self, test_number: int) -> bool:
         try:
-            # Generate random certificate details
             details = generate_random_details()
             self.test_results['cert_details'].append(details)
 
-            # Generate key pair
             private_key = rsa.generate_private_key(
                 public_exponent=65537,
                 key_size=1024,
             )
 
-            # Create subject and issuer with random details
-            subject = issuer = x509.Name([
+            subject = x509.Name([
                 x509.NameAttribute(NameOID.COMMON_NAME, details['common_name']),
                 x509.NameAttribute(NameOID.ORGANIZATION_NAME, details['organization']),
                 x509.NameAttribute(NameOID.COUNTRY_NAME, details['country'])
             ])
 
-            # Build certificate
+            # Build certificate signed by the root CA
             cert = x509.CertificateBuilder().subject_name(
                 subject
             ).issuer_name(
-                issuer
+                self.root_ca_cert.subject
             ).public_key(
                 private_key.public_key()
             ).serial_number(
@@ -97,30 +127,24 @@ class CertificateTest:
                 datetime.datetime.utcnow()
             ).not_valid_after(
                 datetime.datetime.utcnow() + datetime.timedelta(days=1)
-            ).sign(private_key, hashes.SHA256())
+            ).sign(self.root_ca_key, hashes.SHA256())
 
-            # Save certificate
             cert_pem = cert.public_bytes(serialization.Encoding.PEM)
             with open("test_cert.pem", "wb") as f:
                 f.write(cert_pem)
 
-            # Compress certificate
             with open("test_cert.pem", "rb") as f_in:
                 with gzip.open("test_cert.gz", "wb", compresslevel=9) as f_out:
                     f_out.write(f_in.read())
 
-            # Get compressed size
             compressed_size = os.path.getsize("test_cert.gz")
 
-            # Update size statistics
             self.test_results['min_size'] = min(self.test_results['min_size'], compressed_size)
             self.test_results['max_size'] = max(self.test_results['max_size'], compressed_size)
             self.test_results['total_size'] += compressed_size
 
-            # Test message encryption/decryption
             test_message = f"Test message {test_number} for {details['common_name']}".encode()
 
-            # Encrypt
             ciphertext = cert.public_key().encrypt(
                 test_message,
                 padding.OAEP(
@@ -130,7 +154,6 @@ class CertificateTest:
                 )
             )
 
-            # Decrypt
             decrypted_message = private_key.decrypt(
                 ciphertext,
                 padding.OAEP(
@@ -140,11 +163,9 @@ class CertificateTest:
                 )
             )
 
-            # Clean up test files
             os.remove("test_cert.pem")
             os.remove("test_cert.gz")
 
-            # Update test results
             if compressed_size < 1000:
                 self.test_results['size_tests_passed'] += 1
             if decrypted_message == test_message:
@@ -165,48 +186,39 @@ class CertificateTest:
 
         for i in range(num_tests):
             self.generate_and_test_certificate(i + 1)
-            # Print progress bar
             progress = (i + 1) / num_tests
             bar_length = 50
             filled_length = int(bar_length * progress)
             bar = '█' * filled_length + '-' * (bar_length - filled_length)
             print(f'\rProgress: |{bar}| {progress*100:.1f}% Complete', end='')
-        print()  # New line after progress bar
+        print()
 
-        # Calculate average size
         self.test_results['avg_size'] = self.test_results['total_size'] / num_tests
-
-        # Print results
         self.print_test_results(time.time() - start_time)
 
     def print_test_results(self, duration: float):
         print_header("Test Results")
 
-        # Size test results
         size_pass_rate = (self.test_results['size_tests_passed'] / self.test_results['total_tests']) * 100
         if size_pass_rate == 100:
             print_success(f"Size Test: {size_pass_rate:.2f}% of certificates were under 1000 bytes")
         else:
             print_error(f"Size Test: Only {size_pass_rate:.2f}% of certificates were under 1000 bytes")
 
-        # Encryption/decryption test results
         decrypt_pass_rate = (self.test_results['decrypt_tests_passed'] / self.test_results['total_tests']) * 100
         if decrypt_pass_rate == 100:
             print_success(f"Encryption Test: {decrypt_pass_rate:.2f}% of messages were correctly encrypted/decrypted")
         else:
             print_error(f"Encryption Test: Only {decrypt_pass_rate:.2f}% of messages were correctly encrypted/decrypted")
 
-        # Size statistics
         print("\nCompressed Certificate Size Statistics:")
         print(f"  Minimum size: {self.test_results['min_size']} bytes")
         print(f"  Maximum size: {self.test_results['max_size']} bytes")
         print(f"  Average size: {self.test_results['avg_size']:.2f} bytes")
 
-        # Performance
         print(f"\nTotal test duration: {duration:.2f} seconds")
         print(f"Average time per test: {(duration/self.test_results['total_tests'])*1000:.2f} ms")
 
-        # Sample certificate details
         print("\nSample Certificate Details (first 5 and last 5):")
         print("\nFirst 5 certificates:")
         for i, details in enumerate(self.test_results['cert_details'][:5]):
@@ -225,7 +237,7 @@ class CertificateTest:
 def main():
     try:
         tester = CertificateTest()
-        tester.run_tests(5000)
+        tester.run_tests(1000)
     except Exception as e:
         print_error(f"Test suite failed: {str(e)}")
 

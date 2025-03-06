@@ -39,68 +39,46 @@ class XRPLManager:
             raise
         self.wallet = None
         self.wallet_file = "xrp_wallet.json"
-        self.setup_wallet()
+        self.load_or_create_wallet()
 
-    def setup_wallet(self):
-        """Set up the XRP wallet, either loading existing or creating new"""
+    
+    def load_or_create_wallet(self):
         try:
             if os.path.exists(self.wallet_file):
-                print_info("Loading existing wallet...")
                 with open(self.wallet_file, 'r') as f:
                     wallet_data = json.load(f)
-                self.wallet = Wallet(seed=wallet_data['seed'])
-                print_success(f"Wallet loaded successfully: {self.wallet.classic_address}")
+                    # Create wallet from seed
+                    self.wallet = Wallet.from_seed(wallet_data['seed'])
+                    print_success(f"Loaded existing wallet: {self.wallet.classic_address}")
             else:
                 print_info("Creating new XRP Testnet wallet...")
-                self.create_new_wallet()
+                self.wallet = generate_faucet_wallet(self.client)
+                wallet_data = {
+                    'seed': self.wallet.seed,
+                    'public_key': self.wallet.public_key,
+                    'private_key': self.wallet.private_key,
+                    'classic_address': self.wallet.classic_address
+                }
+                with open(self.wallet_file, 'w') as f:
+                    json.dump(wallet_data, f, indent=4)
+                print_success(f"Created new wallet: {self.wallet.classic_address}")
+                # Wait for faucet funding
+                time.sleep(5)
         except Exception as e:
-            print_error(f"Error setting up wallet: {str(e)}")
-            print_debug(f"Full traceback: {traceback.format_exc()}")
-            raise
-
-    def create_new_wallet(self):
-        """Create a new XRP Testnet wallet"""
-        try:
-            print_debug("Attempting to generate faucet wallet...")
-            self.wallet = generate_faucet_wallet(self.client, debug=True)
-            print_debug(f"Wallet generated with address: {self.wallet.classic_address}")
-
-            # Save wallet details to file
-            wallet_data = {
-                'seed': self.wallet.seed,
-                'public_key': self.wallet.public_key,
-                'private_key': self.wallet.private_key,
-                'classic_address': self.wallet.classic_address
-            }
-
-            print_debug("Saving wallet details to file...")
-            with open(self.wallet_file, 'w') as f:
-                json.dump(wallet_data, f, indent=4)
-
-            print_success(f"New wallet created and funded: {self.wallet.classic_address}")
-            print_info("Waiting for faucet transaction to complete...")
-            time.sleep(5)
-
-        except Exception as e:
-            print_error(f"Error creating new wallet: {str(e)}")
-            print_debug(f"Full traceback: {traceback.format_exc()}")
+            print_error(f"Error with wallet: {str(e)}")
             raise
 
     def check_balance(self):
-        """Check the XRP balance of the wallet"""
         try:
-            print_debug("Requesting account info...")
             acct_info = AccountInfo(
                 account=self.wallet.classic_address,
                 ledger_index="validated"
             )
             response = self.client.request(acct_info)
             balance = drops_to_xrp(response.result['account_data']['Balance'])
-            print_info(f"Current balance: {balance} XRP")
             return float(balance)
         except Exception as e:
             print_error(f"Error checking balance: {str(e)}")
-            print_debug(f"Full traceback: {traceback.format_exc()}")
             return 0
 
 def main():
