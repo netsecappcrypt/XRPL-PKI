@@ -21,6 +21,7 @@ import os
 import base64
 import json
 import time
+import zlib
 
 class XRPLedgerManager:
     """
@@ -125,6 +126,7 @@ class XRPLedgerManager:
                 memo_format=self._str_to_hex("text/plain"),
                 memo_type=self._str_to_hex(memo_type)
             )
+            print("size of memo", len(memo))
 
             transaction = AccountSet(
                 account=self.wallet.classic_address,
@@ -261,7 +263,7 @@ class CertificateEncoder:
             bytes: The compressed certificate.
         """
         print("[INFO] Compressing certificate...")
-        return gzip.compress(cert_pem)
+        return zlib.compress(cert_pem, level=zlib.Z_BEST_COMPRESSION)
 
     @staticmethod
     def decompress_cert(compressed_cert):
@@ -273,7 +275,7 @@ class CertificateEncoder:
             bytes: The decompressed certificate.
         """
         print("[INFO] Decompressing certificate...")
-        return gzip.decompress(compressed_cert)
+        return zlib.decompress(compressed_cert)
 
     @staticmethod
     def encode_for_ledger(data):
