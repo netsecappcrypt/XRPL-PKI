@@ -35,20 +35,22 @@ class CertificateManager:
 
     def generate_certificate(self, common_name, organization, country):
         """
-        Generate a certificate signed by a Root CA using ECC.
+        Generate a certificate signed by a Root CA using RSA.
         """
         try:
-            print("[INFO] Generating certificate with ECC...")
+            print("[INFO] Generating certificate with RSA...")
 
-            # Generate ECC private key
-            private_key = ec.generate_private_key(ec.SECP256R1())  # Using P-256 curve
-            print("[INFO] ECC Private key generated")
+            # Generate RSA private key
+            private_key = rsa.generate_private_key(
+                public_exponent=65537,
+                key_size=1024
+            )
+            print("[INFO] RSA Private key generated")
 
             # Create certificate signing request (CSR)
             csr = x509.CertificateSigningRequestBuilder().subject_name(x509.Name([
                 x509.NameAttribute(NameOID.COMMON_NAME, common_name),
                 x509.NameAttribute(NameOID.ORGANIZATION_NAME, organization),
-                x509.NameAttribute(NameOID.COUNTRY_NAME, country.upper()),
             ])).sign(private_key, hashes.SHA256())
             print("[INFO] CSR generated")
 

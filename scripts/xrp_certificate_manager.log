@@ -1,0 +1,255 @@
+2025-03-07 15:08:54,563 - INFO - HEADER: XRP Ledger Certificate Management System
+2025-03-07 15:08:54,563 - INFO - HEADER: Initializing XRP Ledger Connection
+2025-03-07 15:08:54,563 - INFO - HEADER: Initializing XRP Ledger Connection
+2025-03-07 15:08:54,563 - INFO - INFO: Connecting to Testnet at https://s.altnet.rippletest.net:51234
+2025-03-07 15:08:54,563 - INFO - SUCCESS: Successfully connected to XRP Ledger
+2025-03-07 15:08:54,563 - INFO - INFO: Checking for existing wallet...
+2025-03-07 15:08:54,563 - INFO - INFO: Found existing wallet file: xrp_wallet.json
+2025-03-07 15:08:54,572 - INFO - SUCCESS: Loaded existing wallet with address: rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-03-07 15:08:54,572 - INFO - INFO: Verifying wallet access...
+2025-03-07 15:08:54,572 - ERROR - ERROR: Failed to load existing wallet: 'XRPLedgerManager' object has no attribute 'check_balance'
+2025-03-07 15:08:54,572 - ERROR - ERROR: Wallet initialization failed: 'XRPLedgerManager' object has no attribute 'check_balance'
+2025-03-07 15:08:54,572 - ERROR - ERROR: Program execution failed: 'XRPLedgerManager' object has no attribute 'check_balance'
+2025-03-07 15:11:03,494 - INFO - HEADER: XRP Ledger Certificate Management System
+2025-03-07 15:11:03,494 - INFO - HEADER: Initializing XRP Ledger Connection
+2025-03-07 15:11:03,494 - INFO - HEADER: Initializing XRP Ledger Connection
+2025-03-07 15:11:03,494 - INFO - INFO: Connecting to Testnet at https://s.altnet.rippletest.net:51234
+2025-03-07 15:11:03,494 - INFO - SUCCESS: Successfully connected to XRP Ledger
+2025-03-07 15:11:03,494 - INFO - INFO: Checking for existing wallet...
+2025-03-07 15:11:03,494 - INFO - INFO: Found existing wallet file: xrp_wallet.json
+2025-03-07 15:11:03,504 - INFO - SUCCESS: Loaded existing wallet with address: rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-03-07 15:11:03,504 - INFO - INFO: Verifying wallet access...
+2025-03-07 15:11:03,504 - INFO - INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-03-07 15:11:04,143 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:11:04,145 - INFO - SUCCESS: Balance retrieved: 99.999940 XRP
+2025-03-07 15:11:04,146 - INFO - SUCCESS: Wallet verified with balance: 99.99994 XRP
+2025-03-07 15:11:04,146 - INFO - INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-03-07 15:11:04,617 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:11:04,620 - INFO - SUCCESS: Balance retrieved: 99.999940 XRP
+2025-03-07 15:11:04,620 - INFO - INFO: Initial balance: 99.99994 XRP
+2025-03-07 15:11:04,622 - INFO - HEADER: Certificate Management Demo
+2025-03-07 15:11:04,622 - INFO - HEADER: Generating Certificate for new@example.com
+2025-03-07 15:11:04,622 - INFO - INFO: Generating RSA private key (size: 2048 bits)...
+2025-03-07 15:11:04,671 - INFO - SUCCESS: RSA Private key generated
+2025-03-07 15:11:04,671 - INFO - INFO: Generating Certificate Signing Request (CSR)...
+2025-03-07 15:11:04,676 - INFO - SUCCESS: CSR generated successfully
+2025-03-07 15:11:04,739 - INFO - SUCCESS: Root CA credentials loaded
+2025-03-07 15:11:04,739 - INFO - INFO: Generating certificate...
+2025-03-07 15:11:04,742 - INFO - SUCCESS: Certificate generated successfully
+2025-03-07 15:11:04,742 - INFO - SUCCESS: Certificate and private key saved to certificates
+2025-03-07 15:11:04,743 - INFO - SUCCESS: Certificates saved successfully
+2025-03-07 15:11:04,743 - INFO - SUCCESS: Certificate record updated for new@example.com
+2025-03-07 15:11:04,743 - INFO - HEADER: Storing Certificate for new@example.com in XRP Ledger
+2025-03-07 15:11:04,743 - INFO - INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-03-07 15:11:05,314 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:11:05,319 - INFO - SUCCESS: Balance retrieved: 99.999940 XRP
+2025-03-07 15:11:05,319 - INFO - INFO: Current balance: 99.99994 XRP
+2025-03-07 15:11:05,319 - ERROR - ERROR: Failed to store certificate: 'CertificateManager' object has no attribute 'hash_email'
+2025-03-07 15:11:05,320 - ERROR - ERROR: Program execution failed: 'CertificateManager' object has no attribute 'hash_email'
+2025-03-07 15:12:29,520 - INFO - HEADER: XRP Ledger Certificate Management System
+2025-03-07 15:12:29,520 - INFO - HEADER: Initializing XRP Ledger Connection
+2025-03-07 15:12:29,520 - INFO - HEADER: Initializing XRP Ledger Connection
+2025-03-07 15:12:29,520 - INFO - INFO: Connecting to Testnet at https://s.altnet.rippletest.net:51234
+2025-03-07 15:12:29,520 - INFO - SUCCESS: Successfully connected to XRP Ledger
+2025-03-07 15:12:29,520 - INFO - INFO: Checking for existing wallet...
+2025-03-07 15:12:29,520 - INFO - INFO: Found existing wallet file: xrp_wallet.json
+2025-03-07 15:12:29,529 - INFO - SUCCESS: Loaded existing wallet with address: rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-03-07 15:12:29,529 - INFO - INFO: Verifying wallet access...
+2025-03-07 15:12:29,529 - INFO - INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-03-07 15:12:30,427 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:30,431 - INFO - SUCCESS: Balance retrieved: 99.999940 XRP
+2025-03-07 15:12:30,431 - INFO - SUCCESS: Wallet verified with balance: 99.99994 XRP
+2025-03-07 15:12:30,431 - INFO - INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-03-07 15:12:31,019 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:31,023 - INFO - SUCCESS: Balance retrieved: 99.999940 XRP
+2025-03-07 15:12:31,024 - INFO - INFO: Initial balance: 99.99994 XRP
+2025-03-07 15:12:31,036 - INFO - HEADER: Certificate Management Demo
+2025-03-07 15:12:31,036 - INFO - HEADER: Generating Certificate for new@example.com
+2025-03-07 15:12:31,037 - INFO - INFO: Generating RSA private key (size: 2048 bits)...
+2025-03-07 15:12:31,111 - INFO - SUCCESS: RSA Private key generated
+2025-03-07 15:12:31,111 - INFO - INFO: Generating Certificate Signing Request (CSR)...
+2025-03-07 15:12:31,116 - INFO - SUCCESS: CSR generated successfully
+2025-03-07 15:12:31,162 - INFO - SUCCESS: Root CA credentials loaded
+2025-03-07 15:12:31,162 - INFO - INFO: Generating certificate...
+2025-03-07 15:12:31,164 - INFO - SUCCESS: Certificate generated successfully
+2025-03-07 15:12:31,177 - INFO - SUCCESS: Certificate and private key saved to certificates
+2025-03-07 15:12:31,177 - INFO - SUCCESS: Certificates saved successfully
+2025-03-07 15:12:31,177 - INFO - SUCCESS: Certificate record updated for new@example.com
+2025-03-07 15:12:31,177 - INFO - HEADER: Storing Certificate for new@example.com in XRP Ledger
+2025-03-07 15:12:31,177 - INFO - INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-03-07 15:12:31,639 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:31,752 - INFO - SUCCESS: Balance retrieved: 99.999940 XRP
+2025-03-07 15:12:31,752 - INFO - INFO: Current balance: 99.99994 XRP
+2025-03-07 15:12:31,752 - INFO - INFO: Generated email hash: f0030501023327437b06e5c6f87df787
+2025-03-07 15:12:31,753 - INFO - INFO: Original certificate size: 1159 bytes
+2025-03-07 15:12:31,753 - INFO - INFO: Compressed certificate size: 892 bytes
+2025-03-07 15:12:31,753 - INFO - INFO: Base64 encoded certificate size: 1192 bytes
+2025-03-07 15:12:31,753 - INFO - INFO: Certificate prepared for storage: 1192 bytes
+2025-03-07 15:12:31,754 - INFO - INFO: Certificate split into 3 chunks
+2025-03-07 15:12:32,331 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:32,921 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:33,508 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:34,096 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:34,698 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:35,191 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:36,780 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:37,400 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:38,988 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:39,565 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:39,567 - INFO - SUCCESS: Chunk 1/3 stored successfully
+2025-03-07 15:12:42,050 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:42,629 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:43,214 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:43,803 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:44,296 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:46,131 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:47,188 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:48,705 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:49,399 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:49,403 - INFO - SUCCESS: Chunk 2/3 stored successfully
+2025-03-07 15:12:52,326 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:53,167 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:53,947 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:54,834 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:55,541 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:57,354 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:57,940 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:12:59,537 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:13:00,122 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:13:00,125 - INFO - SUCCESS: Chunk 3/3 stored successfully
+2025-03-07 15:13:00,125 - INFO - SUCCESS: Certificate stored in 3 transactions
+2025-03-07 15:13:04,127 - INFO - HEADER: Retrieving Certificate for new@example.com
+2025-03-07 15:13:04,128 - INFO - INFO: Searching for certificate with email hash: f0030501023327437b06e5c6f87df787
+2025-03-07 15:13:04,601 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:13:04,719 - INFO - INFO: Processing 10 transactions...
+2025-03-07 15:13:04,720 - INFO - INFO: Found chunk 3 of 3
+2025-03-07 15:13:04,720 - INFO - INFO: Found chunk 2 of 3
+2025-03-07 15:13:04,720 - INFO - INFO: Found chunk 1 of 3
+2025-03-07 15:13:04,722 - INFO - SUCCESS: Certificate successfully reconstructed
+2025-03-07 15:13:04,723 - INFO - SUCCESS: Certificate successfully loaded
+2025-03-07 15:13:04,723 - INFO - SUCCESS: Certificate retrieved successfully
+2025-03-07 15:13:04,723 - INFO - INFO: Certificate Details:
+2025-03-07 15:13:04,723 - INFO - INFO: Common Name: new@example.com
+2025-03-07 15:13:04,723 - INFO - INFO: Organization: new Organization
+2025-03-07 15:13:04,723 - INFO - INFO: Country: IE
+2025-03-07 15:13:04,723 - INFO - HEADER: Testing Encryption/Decryption
+2025-03-07 15:13:04,724 - INFO - HEADER: Encrypting Message (length: 48)
+2025-03-07 15:13:04,724 - INFO - INFO: Encrypting chunk 1/1
+2025-03-07 15:13:04,725 - INFO - SUCCESS: Message encrypted successfully
+2025-03-07 15:13:04,725 - INFO - SUCCESS: Message encrypted
+2025-03-07 15:13:04,725 - INFO - HEADER: Decrypting Message for new@example.com
+2025-03-07 15:13:04,789 - INFO - INFO: Decrypting 1 chunks
+2025-03-07 15:13:04,789 - INFO - INFO: Decrypting chunk 1/1
+2025-03-07 15:13:04,791 - INFO - SUCCESS: Message decrypted successfully
+2025-03-07 15:13:04,791 - INFO - SUCCESS: Message decrypted
+2025-03-07 15:13:04,791 - INFO - INFO: Original message: Hello, XRP Ledger Certificate Management System!
+2025-03-07 15:13:04,791 - INFO - INFO: Decrypted message: Hello, XRP Ledger Certificate Management System!
+2025-03-07 15:13:04,792 - INFO - SUCCESS: Message integrity verified
+2025-03-07 15:13:04,792 - INFO - INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-03-07 15:13:05,370 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:13:05,371 - INFO - SUCCESS: Balance retrieved: 99.999910 XRP
+2025-03-07 15:13:05,371 - INFO - HEADER: Transaction Summary
+2025-03-07 15:13:05,371 - INFO - INFO: Initial balance: 99.99994 XRP
+2025-03-07 15:13:05,371 - INFO - INFO: Final balance: 99.99991 XRP
+2025-03-07 15:13:05,371 - INFO - INFO: Total XRP spent: 2.9999999995311555e-05 XRP
+2025-03-07 15:15:15,908 - INFO - HEADER: XRP Ledger Certificate Management System
+2025-03-07 15:15:15,908 - INFO - HEADER: Initializing XRP Ledger Connection
+2025-03-07 15:15:15,908 - INFO - HEADER: Initializing XRP Ledger Connection
+2025-03-07 15:15:15,908 - INFO - INFO: Connecting to Testnet at https://s.altnet.rippletest.net:51234
+2025-03-07 15:15:15,908 - INFO - SUCCESS: Successfully connected to XRP Ledger
+2025-03-07 15:15:15,909 - INFO - INFO: Checking for existing wallet...
+2025-03-07 15:15:15,909 - INFO - INFO: Found existing wallet file: xrp_wallet.json
+2025-03-07 15:15:15,918 - INFO - SUCCESS: Loaded existing wallet with address: rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-03-07 15:15:15,918 - INFO - INFO: Verifying wallet access...
+2025-03-07 15:15:15,918 - INFO - INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-03-07 15:15:16,569 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:16,572 - INFO - SUCCESS: Balance retrieved: 99.999910 XRP
+2025-03-07 15:15:16,572 - INFO - SUCCESS: Wallet verified with balance: 99.99991 XRP
+2025-03-07 15:15:16,573 - INFO - INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-03-07 15:15:17,037 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:17,150 - INFO - SUCCESS: Balance retrieved: 99.999910 XRP
+2025-03-07 15:15:17,151 - INFO - INFO: Initial balance: 99.99991 XRP
+2025-03-07 15:15:17,161 - INFO - HEADER: Certificate Management Demo
+2025-03-07 15:15:17,161 - INFO - HEADER: Generating Certificate for new@example.com
+2025-03-07 15:15:17,161 - INFO - INFO: Generating RSA private key (size: 2048 bits)...
+2025-03-07 15:15:17,208 - INFO - SUCCESS: RSA Private key generated
+2025-03-07 15:15:17,208 - INFO - INFO: Generating Certificate Signing Request (CSR)...
+2025-03-07 15:15:17,213 - INFO - SUCCESS: CSR generated successfully
+2025-03-07 15:15:17,264 - INFO - SUCCESS: Root CA credentials loaded
+2025-03-07 15:15:17,264 - INFO - INFO: Generating certificate...
+2025-03-07 15:15:17,266 - INFO - SUCCESS: Certificate generated successfully
+2025-03-07 15:15:17,284 - INFO - SUCCESS: Certificate and private key saved to certificates
+2025-03-07 15:15:17,284 - INFO - SUCCESS: Certificates saved successfully
+2025-03-07 15:15:17,284 - INFO - SUCCESS: Certificate record updated for new@example.com
+2025-03-07 15:15:17,284 - INFO - HEADER: Storing Certificate for new@example.com in XRP Ledger
+2025-03-07 15:15:17,284 - INFO - INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-03-07 15:15:17,855 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:17,857 - INFO - SUCCESS: Balance retrieved: 99.999910 XRP
+2025-03-07 15:15:17,857 - INFO - INFO: Current balance: 99.99991 XRP
+2025-03-07 15:15:17,857 - INFO - INFO: Generated email hash: f0030501023327437b06e5c6f87df787
+2025-03-07 15:15:17,857 - INFO - INFO: Original certificate size: 1159 bytes
+2025-03-07 15:15:17,857 - INFO - INFO: Compressed certificate size: 884 bytes
+2025-03-07 15:15:17,857 - INFO - INFO: Base64 encoded certificate size: 1180 bytes
+2025-03-07 15:15:17,857 - INFO - INFO: Certificate prepared for storage: 1180 bytes
+2025-03-07 15:15:17,857 - INFO - INFO: Certificate split into 3 chunks
+2025-03-07 15:15:18,329 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:18,915 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:19,383 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:19,971 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:20,457 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:20,937 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:22,413 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:22,889 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:24,367 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:25,055 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:25,059 - INFO - SUCCESS: Chunk 1/3 stored successfully
+2025-03-07 15:15:27,534 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:28,237 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:28,964 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:29,818 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:30,664 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:32,503 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:33,555 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:35,187 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:35,776 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:37,248 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:37,866 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:37,872 - INFO - SUCCESS: Chunk 2/3 stored successfully
+2025-03-07 15:15:40,456 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:41,036 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:41,609 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:42,255 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:42,744 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:44,331 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:44,918 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:46,397 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:47,096 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:47,100 - INFO - SUCCESS: Chunk 3/3 stored successfully
+2025-03-07 15:15:47,100 - INFO - SUCCESS: Certificate stored in 3 transactions
+2025-03-07 15:15:51,105 - INFO - HEADER: Retrieving Certificate for new@example.com
+2025-03-07 15:15:51,106 - INFO - INFO: Searching for certificate with email hash: f0030501023327437b06e5c6f87df787
+2025-03-07 15:15:51,582 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-03-07 15:15:51,990 - INFO - INFO: Processing 13 transactions...
+2025-03-07 15:15:51,990 - INFO - INFO: Found chunk 3 of 3
+2025-03-07 15:15:51,990 - INFO - INFO: Found chunk 2 of 3
+2025-03-07 15:15:51,991 - INFO - INFO: Found chunk 1 of 3
+2025-03-07 15:15:51,991 - INFO - INFO: Found chunk 3 of 3
+2025-03-07 15:15:51,991 - INFO - INFO: Found chunk 2 of 3
+2025-03-07 15:15:51,991 - INFO - INFO: Found chunk 1 of 3
+2025-03-07 15:15:51,993 - INFO - SUCCESS: Certificate successfully reconstructed
+2025-03-07 15:15:51,993 - INFO - SUCCESS: Certificate successfully loaded
+2025-03-07 15:15:51,993 - INFO - SUCCESS: Certificate retrieved successfully
+2025-03-07 15:15:51,993 - INFO - INFO: Certificate Details:
+2025-03-07 15:15:51,993 - INFO - INFO: Common Name: new@example.com
+2025-03-07 15:15:51,993 - INFO - INFO: Organization: new Organization
+2025-03-07 15:15:51,993 - INFO - INFO: Country: IE
+2025-03-07 15:15:51,993 - INFO - HEADER: Testing Encryption/Decryption
+2025-03-07 15:15:51,993 - INFO - HEADER: Encrypting Message (length: 48)
+2025-03-07 15:15:51,993 - INFO - INFO: Encrypting chunk 1/1
+2025-03-07 15:15:51,994 - INFO - SUCCESS: Message encrypted successfully
+2025-03-07 15:15:51,994 - INFO - SUCCESS: Message encrypted
+2025-03-07 15:15:51,994 - INFO - HEADER: Decrypting Message for new@example.com
+2025-03-07 15:15:52,053 - INFO - INFO: Decrypting 1 chunks
+2025-03-07 15:15:52,053 - INFO - INFO: Decrypting chunk 1/1
+2025-03-07 15:15:52,055 - ERROR - ERROR: Decryption failed: Decryption failed
+2025-03-07 15:15:52,055 - ERROR - ERROR: Program execution failed: Decryption failed
