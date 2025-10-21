@@ -981,8 +981,8 @@ def main():
         print_header("Certificate Management Demo")
 
         # Generate test certificate
-        common_name = "new@example.com"
-        organization = "new Organization"
+        common_name = "new2@example.com"
+        organization = "new2 Organization"
         country = "IE"
 
         certificate, private_key = cert_manager.generate_certificate(

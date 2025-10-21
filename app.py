@@ -9,7 +9,7 @@ import base64
 import json
 import os
 from xrpl_ledger import XRPLedgerManager, CertificateEncoder
-from email.mime.text import MIMEText
+from email.mime.text import MIMEText 
 from email.mime.multipart import MIMEMultipart
 import smtplib
 import ssl

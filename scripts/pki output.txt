@@ -1,0 +1,244 @@
+
+==================================================
+    XRP Ledger Certificate Management System
+==================================================
+
+2025-07-29 13:12:28,925 - INFO - HEADER: XRP Ledger Certificate Management System
+
+==================================================
+    Initializing XRP Ledger Connection
+==================================================
+
+2025-07-29 13:12:28,926 - INFO - HEADER: Initializing XRP Ledger Connection
+
+==================================================
+    Initializing XRP Ledger Connection
+==================================================
+
+2025-07-29 13:12:28,926 - INFO - HEADER: Initializing XRP Ledger Connection
+ℹ INFO: Connecting to Testnet at https://s.altnet.rippletest.net:51234
+2025-07-29 13:12:28,926 - INFO - INFO: Connecting to Testnet at https://s.altnet.rippletest.net:51234
+✓ SUCCESS: Successfully connected to XRP Ledger
+2025-07-29 13:12:28,926 - INFO - SUCCESS: Successfully connected to XRP Ledger
+ℹ INFO: Checking for existing wallet...
+2025-07-29 13:12:28,926 - INFO - INFO: Checking for existing wallet...
+ℹ INFO: Found existing wallet file: xrp_wallet.json
+2025-07-29 13:12:28,926 - INFO - INFO: Found existing wallet file: xrp_wallet.json
+✓ SUCCESS: Loaded existing wallet with address: rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-07-29 13:12:28,943 - INFO - SUCCESS: Loaded existing wallet with address: rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+ℹ INFO: Verifying wallet access...
+2025-07-29 13:12:28,943 - INFO - INFO: Verifying wallet access...
+ℹ INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-07-29 13:12:28,944 - INFO - INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-07-29 13:12:29,604 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+✓ SUCCESS: Balance retrieved: 99.999570 XRP
+2025-07-29 13:12:29,609 - INFO - SUCCESS: Balance retrieved: 99.999570 XRP
+✓ SUCCESS: Wallet verified with balance: 99.99957 XRP
+2025-07-29 13:12:29,609 - INFO - SUCCESS: Wallet verified with balance: 99.99957 XRP
+ℹ INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-07-29 13:12:29,609 - INFO - INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-07-29 13:12:30,001 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+✓ SUCCESS: Balance retrieved: 99.999570 XRP
+2025-07-29 13:12:30,005 - INFO - SUCCESS: Balance retrieved: 99.999570 XRP
+ℹ INFO: Initial balance: 99.99957 XRP
+2025-07-29 13:12:30,005 - INFO - INFO: Initial balance: 99.99957 XRP
+
+==================================================
+    Certificate Management Demo
+==================================================
+
+2025-07-29 13:12:30,016 - INFO - HEADER: Certificate Management Demo
+
+==================================================
+    Generating Certificate for new2@example.com
+==================================================
+
+2025-07-29 13:12:30,016 - INFO - HEADER: Generating Certificate for new2@example.com
+ℹ INFO: Generating RSA private key (size: 2048 bits)...
+2025-07-29 13:12:30,017 - INFO - INFO: Generating RSA private key (size: 2048 bits)...
+✓ SUCCESS: RSA Private key generated
+2025-07-29 13:12:30,095 - INFO - SUCCESS: RSA Private key generated
+ℹ INFO: Generating Certificate Signing Request (CSR)...
+2025-07-29 13:12:30,095 - INFO - INFO: Generating Certificate Signing Request (CSR)...
+✓ SUCCESS: CSR generated successfully
+2025-07-29 13:12:30,099 - INFO - SUCCESS: CSR generated successfully
+✓ SUCCESS: Root CA credentials loaded
+2025-07-29 13:12:30,185 - INFO - SUCCESS: Root CA credentials loaded
+ℹ INFO: Generating certificate...
+2025-07-29 13:12:30,185 - INFO - INFO: Generating certificate...
+/Users/harsha/Projects/adapt/cert-encryption-app/scripts/xrp_final.py:423: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future versi
+on. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).                                                                                   datetime.datetime.utcnow()
+/Users/harsha/Projects/adapt/cert-encryption-app/scripts/xrp_final.py:425: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future versi
+on. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).                                                                                   datetime.datetime.utcnow() + datetime.timedelta(days=validity_days)
+✓ SUCCESS: Certificate generated successfully
+2025-07-29 13:12:30,189 - INFO - SUCCESS: Certificate generated successfully
+✓ SUCCESS: Certificate and private key saved to certificates
+2025-07-29 13:12:30,190 - INFO - SUCCESS: Certificate and private key saved to certificates
+/Users/harsha/Projects/adapt/cert-encryption-app/scripts/xrp_final.py:484: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future versi
+on. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).                                                                                   'creation_date': datetime.datetime.utcnow().isoformat(),
+✓ SUCCESS: Certificates saved successfully
+2025-07-29 13:12:30,191 - INFO - SUCCESS: Certificates saved successfully
+✓ SUCCESS: Certificate record updated for new2@example.com
+2025-07-29 13:12:30,191 - INFO - SUCCESS: Certificate record updated for new2@example.com
+
+==================================================
+    Storing Certificate for new2@example.com in XRP Ledger
+==================================================
+
+2025-07-29 13:12:30,191 - INFO - HEADER: Storing Certificate for new2@example.com in XRP Ledger
+ℹ INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-07-29 13:12:30,191 - INFO - INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-07-29 13:12:30,575 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+✓ SUCCESS: Balance retrieved: 99.999570 XRP
+2025-07-29 13:12:30,578 - INFO - SUCCESS: Balance retrieved: 99.999570 XRP
+ℹ INFO: Current balance: 99.99957 XRP
+2025-07-29 13:12:30,579 - INFO - INFO: Current balance: 99.99957 XRP
+🔍 DEBUG: Created hash for email new2@example.com: 0e672fe204a15cbc9271634fd5a49956
+ℹ INFO: Generated email hash: 0e672fe204a15cbc9271634fd5a49956
+2025-07-29 13:12:30,579 - INFO - INFO: Generated email hash: 0e672fe204a15cbc9271634fd5a49956
+ℹ INFO: Original certificate size: 1164 bytes
+2025-07-29 13:12:30,580 - INFO - INFO: Original certificate size: 1164 bytes
+ℹ INFO: Compressed certificate size: 873 bytes
+2025-07-29 13:12:30,580 - INFO - INFO: Compressed certificate size: 873 bytes
+ℹ INFO: Base64 encoded certificate size: 1164 bytes
+2025-07-29 13:12:30,580 - INFO - INFO: Base64 encoded certificate size: 1164 bytes
+ℹ INFO: Certificate prepared for storage: 1164 bytes
+2025-07-29 13:12:30,580 - INFO - INFO: Certificate prepared for storage: 1164 bytes
+ℹ INFO: Certificate split into 3 chunks
+2025-07-29 13:12:30,581 - INFO - INFO: Certificate split into 3 chunks
+/Users/harsha/Projects/adapt/cert-encryption-app/scripts/xrp_final.py:606: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future versi
+on. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).                                                                                   'timestamp': datetime.datetime.utcnow().isoformat()
+🔍 DEBUG: Chunk 1 memo size: 647 bytes
+2025-07-29 13:12:30,974 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:31,371 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:31,751 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:32,136 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:32,533 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:32,940 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:34,340 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:34,735 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:36,141 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:36,535 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+✓ SUCCESS: Chunk 1/3 stored successfully
+2025-07-29 13:12:36,539 - INFO - SUCCESS: Chunk 1/3 stored successfully
+🔍 DEBUG: Chunk 2 memo size: 647 bytes
+2025-07-29 13:12:38,933 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:39,333 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:39,731 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:40,129 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:40,529 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:41,930 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:42,325 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:43,722 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:44,031 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:45,518 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:45,831 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:47,314 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:47,712 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+✓ SUCCESS: Chunk 2/3 stored successfully
+2025-07-29 13:12:47,715 - INFO - SUCCESS: Chunk 2/3 stored successfully
+🔍 DEBUG: Chunk 3 memo size: 311 bytes
+2025-07-29 13:12:50,130 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:50,523 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:50,918 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:51,318 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:51,717 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:53,121 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:53,516 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:54,917 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:55,324 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:56,722 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+2025-07-29 13:12:57,114 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+✓ SUCCESS: Chunk 3/3 stored successfully
+2025-07-29 13:12:57,117 - INFO - SUCCESS: Chunk 3/3 stored successfully
+✓ SUCCESS: Certificate stored in 3 transactions
+2025-07-29 13:12:57,117 - INFO - SUCCESS: Certificate stored in 3 transactions
+
+==================================================
+    Retrieving Certificate for new2@example.com
+==================================================
+
+2025-07-29 13:13:01,118 - INFO - HEADER: Retrieving Certificate for new2@example.com
+🔍 DEBUG: Created hash for email new2@example.com: 0e672fe204a15cbc9271634fd5a49956
+ℹ INFO: Searching for certificate with email hash: 0e672fe204a15cbc9271634fd5a49956
+2025-07-29 13:13:01,119 - INFO - INFO: Searching for certificate with email hash: 0e672fe204a15cbc9271634fd5a49956
+2025-07-29 13:13:01,439 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+ℹ INFO: Processing 47 transactions...
+2025-07-29 13:13:01,886 - INFO - INFO: Processing 47 transactions...
+ℹ INFO: Found chunk 3 of 3
+2025-07-29 13:13:01,886 - INFO - INFO: Found chunk 3 of 3
+ℹ INFO: Found chunk 2 of 3
+2025-07-29 13:13:01,886 - INFO - INFO: Found chunk 2 of 3
+ℹ INFO: Found chunk 1 of 3
+2025-07-29 13:13:01,886 - INFO - INFO: Found chunk 1 of 3
+✓ SUCCESS: Certificate successfully reconstructed
+2025-07-29 13:13:01,888 - INFO - SUCCESS: Certificate successfully reconstructed
+✓ SUCCESS: Certificate successfully loaded
+2025-07-29 13:13:01,888 - INFO - SUCCESS: Certificate successfully loaded
+✓ SUCCESS: Certificate retrieved successfully
+2025-07-29 13:13:01,888 - INFO - SUCCESS: Certificate retrieved successfully
+ℹ INFO: Certificate Details:
+2025-07-29 13:13:01,888 - INFO - INFO: Certificate Details:
+ℹ INFO: Common Name: new2@example.com
+2025-07-29 13:13:01,888 - INFO - INFO: Common Name: new2@example.com
+ℹ INFO: Organization: new2 Organization
+2025-07-29 13:13:01,888 - INFO - INFO: Organization: new2 Organization
+ℹ INFO: Country: IE
+2025-07-29 13:13:01,888 - INFO - INFO: Country: IE
+
+==================================================
+    Testing Encryption/Decryption
+==================================================
+
+2025-07-29 13:13:01,888 - INFO - HEADER: Testing Encryption/Decryption
+
+==================================================
+    Encrypting Message (length: 48)
+==================================================
+
+2025-07-29 13:13:01,889 - INFO - HEADER: Encrypting Message (length: 48)
+ℹ INFO: Encrypting chunk 1/1
+2025-07-29 13:13:01,889 - INFO - INFO: Encrypting chunk 1/1
+✓ SUCCESS: Message encrypted successfully
+2025-07-29 13:13:01,889 - INFO - SUCCESS: Message encrypted successfully
+✓ SUCCESS: Message encrypted
+2025-07-29 13:13:01,889 - INFO - SUCCESS: Message encrypted
+
+==================================================
+    Decrypting Message for new2@example.com
+==================================================
+
+2025-07-29 13:13:01,889 - INFO - HEADER: Decrypting Message for new2@example.com
+ℹ INFO: Decrypting 1 chunks
+2025-07-29 13:13:01,956 - INFO - INFO: Decrypting 1 chunks
+ℹ INFO: Decrypting chunk 1/1
+2025-07-29 13:13:01,956 - INFO - INFO: Decrypting chunk 1/1
+✓ SUCCESS: Message decrypted successfully
+2025-07-29 13:13:01,959 - INFO - SUCCESS: Message decrypted successfully
+✓ SUCCESS: Message decrypted
+2025-07-29 13:13:01,959 - INFO - SUCCESS: Message decrypted
+ℹ INFO: Original message: Hello, XRP Ledger Certificate Management System!
+2025-07-29 13:13:01,959 - INFO - INFO: Original message: Hello, XRP Ledger Certificate Management System!
+ℹ INFO: Encrypted message: b'\x00\x00\x00\x01\x00\x00\x01\x00\x94\x04Z\xda\xbd\xeb\xfft@E\x9a\xfc\xab+\xad[\xf9Q~/\xb93\xd3\xf4\xc1w\xaf\xfa\xd3-f\xb3\x9b\xa4\x04Z\xb8\x15?\xfc\xc
+f\xac\xce\x89j\x1b\xc5\xf0d"x\xaay{\xe7F\xa5\xf2\x14P\xcf1\xf4#\xeaT\xa73\xdc\x83\x8e~u\x9dM\x13\xe2\x11\xd8\xbdQUq\xca\x137\x8as\x04\xb5D\xf0I=\x071\x18z\xde3\xa3\xeb\xdb\xb4\xc77q\xfer\xa2O\'\xb43\xd7M8\x8dV\xc8\xb8sy*\x0fr\x8fFD{\xc7\xee\xd1:\xe8\x8ft\xd5\x0e\x15\xd6\x99p\x91\xd7\xb4Q)\x0e\xceFN\xd7\xa0;#Tg\xb0\xe2\x94\x1c\xec\x9f{\x16\x0c\xf4\xb4+\x0fR\xe1`$i"\xf9\x06\xf7\xba\t#\xa4\xbeGf\xab\xfc}%\xaaPd)\xfbTe\x19\xbdy2{\xaa3\x98s\xcd\xbd\nt\x05\x98K\xaed\x01\xa3\xff\xe8\x9f\x8f\xe8\xac\xff\x82\xf4\xa2\xfc\xf2\x03\xf6jt\xc7\x99\xd2\xae\x9e\x1d\x10c,\xeb7^Xp\r\xa3$\xeeyJ}\xbf'                                                                                                                                 2025-07-29 13:13:01,959 - INFO - INFO: Encrypted message: b'\x00\x00\x00\x01\x00\x00\x01\x00\x94\x04Z\xda\xbd\xeb\xfft@E\x9a\xfc\xab+\xad[\xf9Q~/\xb93\xd3\xf4\xc1w\xaf\xfa\xd3-f\x
+b3\x9b\xa4\x04Z\xb8\x15?\xfc\xcf\xac\xce\x89j\x1b\xc5\xf0d"x\xaay{\xe7F\xa5\xf2\x14P\xcf1\xf4#\xeaT\xa73\xdc\x83\x8e~u\x9dM\x13\xe2\x11\xd8\xbdQUq\xca\x137\x8as\x04\xb5D\xf0I=\x071\x18z\xde3\xa3\xeb\xdb\xb4\xc77q\xfer\xa2O\'\xb43\xd7M8\x8dV\xc8\xb8sy*\x0fr\x8fFD{\xc7\xee\xd1:\xe8\x8ft\xd5\x0e\x15\xd6\x99p\x91\xd7\xb4Q)\x0e\xceFN\xd7\xa0;#Tg\xb0\xe2\x94\x1c\xec\x9f{\x16\x0c\xf4\xb4+\x0fR\xe1`$i"\xf9\x06\xf7\xba\t#\xa4\xbeGf\xab\xfc}%\xaaPd)\xfbTe\x19\xbdy2{\xaa3\x98s\xcd\xbd\nt\x05\x98K\xaed\x01\xa3\xff\xe8\x9f\x8f\xe8\xac\xff\x82\xf4\xa2\xfc\xf2\x03\xf6jt\xc7\x99\xd2\xae\x9e\x1d\x10c,\xeb7^Xp\r\xa3$\xeeyJ}\xbf'                                                                                                  ℹ INFO: Decrypted message: Hello, XRP Ledger Certificate Management System!
+2025-07-29 13:13:01,959 - INFO - INFO: Decrypted message: Hello, XRP Ledger Certificate Management System!
+✓ SUCCESS: Message integrity verified
+2025-07-29 13:13:01,959 - INFO - SUCCESS: Message integrity verified
+ℹ INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-07-29 13:13:01,960 - INFO - INFO: Checking balance for rEEnuJK6MvD9VVZt9uVK6wkmJubTWhuUaJ
+2025-07-29 13:13:02,342 - INFO - HTTP Request: POST https://s.altnet.rippletest.net:51234 "HTTP/1.1 200 OK"
+✓ SUCCESS: Balance retrieved: 99.999540 XRP
+2025-07-29 13:13:02,345 - INFO - SUCCESS: Balance retrieved: 99.999540 XRP
+
+==================================================
+    Transaction Summary
+==================================================
+
+2025-07-29 13:13:02,346 - INFO - HEADER: Transaction Summary
+ℹ INFO: Initial balance: 99.99957 XRP
+2025-07-29 13:13:02,346 - INFO - INFO: Initial balance: 99.99957 XRP
+ℹ INFO: Final balance: 99.99954 XRP
+2025-07-29 13:13:02,346 - INFO - INFO: Final balance: 99.99954 XRP
+ℹ INFO: Total XRP spent: 3.000000000952241e-05 XRP
+2025-07-29 13:13:02,346 - INFO - INFO: Total XRP spent: 3.000000000952241e-05 XRP
