@@ -3,3 +3,7 @@ root_cred/
 
 certificates/
 certificates
+
+# XRPL wallet secrets
+xrp_wallet.json
+scripts/xrp_wallet.json
