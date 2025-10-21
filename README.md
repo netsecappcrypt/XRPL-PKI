@@ -1,4 +1,4 @@
-# Cert Encryption App
+# XRPL - PKI
 
 A Flask-based demo that:
 - Generates X.509 certificates signed by a local Root CA
